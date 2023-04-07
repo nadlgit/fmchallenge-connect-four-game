@@ -1,3 +1,16 @@
+import { AppContent } from './app-content';
+import { ChallengeAttribution } from './challenge-attribution';
+import styles from './app.module.css';
+
 export const App = () => {
-  return <h1>Connect Four game</h1>;
+  return (
+    <>
+      <main className={styles.content}>
+        <AppContent />
+      </main>
+      <footer className={styles.footer}>
+        <ChallengeAttribution />
+      </footer>
+    </>
+  );
 };
