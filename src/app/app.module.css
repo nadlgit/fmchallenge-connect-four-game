@@ -8,4 +8,12 @@
   width: 100%;
   display: grid;
   justify-content: center;
+  font-size: 0.5rem;
+}
+.footer a {
+  text-decoration: none;
+  color: var(--color-white);
+}
+.footer a:hover {
+  color: var(--color-red);
 }

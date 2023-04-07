@@ -29,3 +29,40 @@ body,
   overflow: hidden;
   white-space: nowrap;
 }
+
+:root {
+  --color-black: hsl(0, 0%, 0%);
+  --color-dark-purple: hsl(257, 67%, 51%);
+  --color-purple: hsl(257, 100%, 64%);
+  --color-red: hsl(347, 98%, 70%);
+  --color-white: hsl(0, 0%, 100%);
+  --color-yellow: hsl(41, 100%, 70%);
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  color: var(--color-black);
+  background-color: var(--color-purple);
+}
+
+.heading-l {
+  font-weight: 700;
+  font-size: 3.5rem;
+  line-height: 4.375rem;
+}
+.heading-m {
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.875rem;
+}
+.heading-s {
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.625rem;
+}
+.heading-xs {
+  font-weight: 700;
+}
