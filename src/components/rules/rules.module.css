@@ -1,9 +1,13 @@
+.outer {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+}
+
 .container {
   position: relative;
-  top: calc(50% - 0.3125rem);
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: min(30rem, calc(100vw - 2.5rem));
+  margin-block: 1.25rem 3.25rem;
   padding-inline: clamp(1.5rem, calc(2.54vw + 0.9rem), 2.125rem);
   padding-block: 1.875rem 3rem;
   border-radius: 2.5rem;
