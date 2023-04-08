@@ -45,6 +45,9 @@ body {
   font-size: 1rem;
   line-height: 1.25rem;
   color: var(--color-black);
+  background-color: var(--color-purple);
+}
+body.bg-darker {
   background-color: var(--color-dark-purple);
 }
 
