@@ -45,7 +45,7 @@ body {
   font-size: 1rem;
   line-height: 1.25rem;
   color: var(--color-black);
-  background-color: var(--color-purple);
+  background-color: var(--color-dark-purple);
 }
 
 .heading-l {

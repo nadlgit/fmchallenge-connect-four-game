@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5rem;
+  min-height: 100%;
+  padding-top: 20vh;
+  padding-bottom: 1rem;
+  background-color: var(--color-purple);
+}
+
+.buttons {
+  display: grid;
+  gap: 1.25rem;
+  width: fit-content;
+}
+
+@media screen and (min-width: 35rem) and (min-height: 35rem) {
+  .container {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: fit-content;
+    min-height: auto;
+    padding: 2.5rem;
+    border-radius: 2.5rem;
+    border: 0.1875rem solid var(--color-black);
+    box-shadow: 0 0.625rem 0 var(--color-black);
+  }
+}

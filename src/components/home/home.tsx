@@ -1,3 +1,7 @@
+import { Logo } from '@/components/logo';
+import { MenuButton } from './menu-button';
+import styles from './home.module.css';
+
 type HomeProps = {
   showRules: () => void;
   playVsPlayer: () => void;
@@ -6,11 +10,13 @@ type HomeProps = {
 
 export const Home = ({ showRules, playVsPlayer, playVsCPU }: HomeProps) => {
   return (
-    <div>
-      <h1>Connect Four game: Home</h1>
-      <button onClick={playVsCPU}>Vs CPU</button>
-      <button onClick={playVsPlayer}>Vs Player</button>
-      <button onClick={showRules}>Rules</button>
+    <div className={styles.container}>
+      <Logo />
+      <div className={styles.buttons}>
+        <MenuButton variant="vsCPU" onClick={playVsCPU} />
+        <MenuButton variant="vsPlayer" onClick={playVsPlayer} />
+        <MenuButton variant="rules" onClick={showRules} />
+      </div>
     </div>
   );
 };
