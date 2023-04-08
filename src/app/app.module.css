@@ -3,7 +3,7 @@
 }
 
 .footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   display: grid;
@@ -12,7 +12,7 @@
 }
 .footer a {
   text-decoration: none;
-  color: var(--color-white);
+  color: var(--color-yellow);
 }
 .footer a:hover {
   color: var(--color-red);

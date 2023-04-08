@@ -3,7 +3,7 @@
   top: calc(50% - 0.3125rem);
   left: 50%;
   transform: translate(-50%, -50%);
-  width: min(30rem, calc(100vw - 3rem));
+  width: min(30rem, calc(100vw - 2.5rem));
   padding-inline: clamp(1.5rem, calc(2.54vw + 0.9rem), 2.125rem);
   padding-block: 1.875rem 3rem;
   border-radius: 2.5rem;
@@ -26,35 +26,36 @@
 }
 
 .orderedlist {
+  --item-margin-left: 1.5rem;
   list-style-type: none;
 }
 .orderedlist li {
   position: relative;
-  margin-left: 1.75rem;
+  margin-left: var(--item-margin-left);
   margin-block: 0.625rem;
 }
 .orderedlist li::before {
   content: counter(list-item);
   position: absolute;
-  left: -1.75rem;
+  left: calc(-1 * var(--item-margin-left));
   font-weight: 700; /* heading-s */
 }
 
 .button {
+  --border-color: var(--color-black);
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translate(-50%, 50%);
-  width: 64px;
-  height: 64px;
+  width: 4rem;
+  height: 4rem;
   border-radius: 100vmax;
-  border: 0.1875rem solid var(--color-black);
-  box-shadow: 0 0.3125rem 0 var(--color-black);
+  border: 0.1875rem solid var(--border-color);
+  box-shadow: 0 0.3125rem 0 var(--border-color);
   background-color: var(--color-red);
 }
 .button:hover {
-  border-color: var(--color-dark-purple);
-  box-shadow: 0 0.3125rem 0 var(--color-dark-purple);
+  --border-color: var(--color-dark-purple);
 }
 
 .button img {
