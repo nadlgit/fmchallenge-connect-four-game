@@ -5,11 +5,12 @@
   --grid-black-layer-height: 20rem;
   --grid-white-layer-height: 19.375rem;
   --grid-gap: 0.375rem;
-  --grid-cell-width: 2.5625rem;
+  --counter-width: 2.5625rem;
+  --counter-height: 2.875rem;
   position: relative;
   display: grid;
-  grid-template-rows: repeat(6, var(--grid-cell-width));
-  grid-template-columns: repeat(7, var(--grid-cell-width));
+  grid-template-rows: repeat(6, var(--counter-width));
+  grid-template-columns: repeat(7, var(--counter-width));
   gap: var(--grid-gap);
   padding: var(--grid-gap);
 }
@@ -32,12 +33,32 @@
 .cell {
   --counter-red-url: url('./counter-red-small.svg');
   --counter-yellow-url: url('./counter-yellow-small.svg');
+  width: var(--counter-width);
+  height: var(--counter-height);
 }
 .cell[data-content='R'] {
   background-image: var(--counter-red-url);
 }
 .cell[data-content='Y'] {
   background-image: var(--counter-yellow-url);
+}
+
+.cell.dropping {
+  animation: drop var(--drop-duration) ease-in;
+}
+@keyframes drop {
+  0% {
+    transform: translateY(calc(-1 * var(--drop-offset) * (var(--counter-width) + var(--grid-gap))));
+  }
+  80% {
+    transform: translateY(0);
+  }
+  90% {
+    transform: translateY(calc(-1 * var(--grid-gap)));
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 @media screen and (min-width: 40rem) and (min-height: 37.5rem) {
@@ -48,7 +69,8 @@
     --grid-black-layer-height: 37.125rem;
     --grid-white-layer-height: 36.5rem;
     --grid-gap: 1.125rem;
-    --grid-cell-width: 4.375rem;
+    --counter-width: 4.375rem;
+    --counter-height: 4.6875rem;
   }
   .cell {
     --counter-red-url: url('./counter-red-large.svg');
