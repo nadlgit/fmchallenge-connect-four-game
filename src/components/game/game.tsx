@@ -1,3 +1,6 @@
+import { Logo } from '@/components/logo';
+import { Board } from './board';
+
 type GameProps = {
   goHome: () => void;
   playMode: 'vsPlayer' | 'vsCPU';
@@ -6,8 +9,16 @@ type GameProps = {
 export const Game = ({ goHome, playMode }: GameProps) => {
   return (
     <div>
-      <h1>{`Connect Four game: Game ${playMode}`}</h1>
-      <button onClick={goHome}>Home</button>
+      <div>
+        <div>Menu</div>
+        <Logo />
+        <div>Restart</div>
+      </div>
+      <div>
+        <div>Red Score</div>
+        <div>Yellow Score</div>
+        <Board />
+      </div>
     </div>
   );
 };
