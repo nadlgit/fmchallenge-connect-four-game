@@ -12,7 +12,9 @@
   grid-template-rows: repeat(6, var(--counter-width));
   grid-template-columns: repeat(7, var(--counter-width));
   gap: var(--grid-gap);
-  padding: var(--grid-gap);
+  padding-inline: var(--grid-gap);
+  padding-block: var(--grid-gap)
+    calc(var(--grid-black-layer-height) - 6 * (var(--counter-width) + var(--grid-gap)));
 }
 .grid::before {
   content: '';
@@ -61,6 +63,22 @@
   }
 }
 
+.columns {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: calc(6 * var(--counter-width) + 7 * var(--grid-gap));
+  grid-template-columns:
+    calc(var(--counter-width) + 1.5 * var(--grid-gap))
+    repeat(5, calc(var(--counter-width) + var(--grid-gap)))
+    calc(var(--counter-width) + 1.5 * var(--grid-gap));
+  cursor: pointer;
+}
+
+.marker {
+  display: none;
+}
+
 @media screen and (min-width: 40rem) and (min-height: 37.5rem) {
   .grid {
     --grid-black-layer-url: url('./board-layer-black-large.svg');
@@ -75,5 +93,31 @@
   .cell {
     --counter-red-url: url('./counter-red-large.svg');
     --counter-yellow-url: url('./counter-yellow-large.svg');
+  }
+}
+
+@media (pointer: fine) {
+  .grid {
+    --marker-width: 2.375rem;
+    --marker-height: 2.25rem;
+    margin-top: var(--marker-height);
+  }
+
+  .marker {
+    display: block;
+    position: absolute;
+    top: calc(-1 * var(--marker-height));
+    left: calc(
+      var(--grid-gap) + 0.5 * var(--counter-width) - 0.5 * var(--marker-width) +
+        (var(--counter-width) + var(--grid-gap)) * (var(--marker-column) - 1)
+    );
+    width: var(--marker-width);
+    height: var(--marker-height);
+  }
+  .marker[data-color='R'] {
+    background-image: url('./marker-red.svg');
+  }
+  .marker[data-color='Y'] {
+    background-image: url('./marker-yellow.svg');
   }
 }
