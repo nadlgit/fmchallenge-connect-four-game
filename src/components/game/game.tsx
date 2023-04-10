@@ -1,3 +1,4 @@
+import { type ComponentPropsWithoutRef, useState } from 'react';
 import { Logo } from '@/components/logo';
 import { Board } from './board';
 
@@ -7,6 +8,11 @@ type GameProps = {
 };
 
 export const Game = ({ goHome, playMode }: GameProps) => {
+  const [counterDropped, setCounterDropped] =
+    useState<ComponentPropsWithoutRef<typeof Board>['counterDropped']>();
+  const [currentPlayerColor, setCurrentPlayerColor] =
+    useState<ComponentPropsWithoutRef<typeof Board>['currentPlayerColor']>('R');
+
   return (
     <div>
       <div>
@@ -17,7 +23,14 @@ export const Game = ({ goHome, playMode }: GameProps) => {
       <div>
         <div>Red Score</div>
         <div>Yellow Score</div>
-        <Board />
+        <Board
+          counterDropped={counterDropped}
+          currentPlayerColor={currentPlayerColor}
+          selectColumn={(column: number) => {
+            setCounterDropped({ column, row: 1, color: currentPlayerColor });
+            setCurrentPlayerColor((c) => (c === 'R' ? 'Y' : 'R'));
+          }}
+        />
       </div>
     </div>
   );
