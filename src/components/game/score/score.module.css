@@ -29,7 +29,8 @@
 }
 
 .label {
-  width: max-content;
+  min-width: 8ch;
+  text-align: center;
   text-transform: uppercase;
   /* heading-xs */
   font-weight: 700;
