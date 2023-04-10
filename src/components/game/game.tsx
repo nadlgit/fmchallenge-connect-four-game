@@ -2,6 +2,7 @@ import { type ComponentPropsWithoutRef, useState } from 'react';
 import { Logo } from '@/components/logo';
 import { Board } from './board';
 import { Score } from './score';
+import { Timer } from './timer';
 
 type GameProps = {
   goHome: () => void;
@@ -32,6 +33,7 @@ export const Game = ({ goHome, playMode }: GameProps) => {
             setCurrentPlayerColor((c) => (c === 'R' ? 'Y' : 'R'));
           }}
         />
+        <Timer playMode={playMode} playerColor="R" value={30} />
       </div>
     </div>
   );

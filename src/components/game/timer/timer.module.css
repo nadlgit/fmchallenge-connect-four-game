@@ -1,0 +1,29 @@
+.container {
+  width: 11.9375rem;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+}
+.container[data-color='R'] {
+  background-image: url('./turn-background-red.svg');
+  color: var(--color-white);
+}
+.container[data-color='Y'] {
+  background-image: url('./turn-background-yellow.svg');
+}
+
+.label {
+  composes: heading-xs from global;
+  display: inline-block;
+  width: max-content;
+  margin-top: 0.75rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.value {
+  composes: heading-l from global;
+}
