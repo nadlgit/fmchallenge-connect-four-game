@@ -1,6 +1,7 @@
 import { type ComponentPropsWithoutRef, useState } from 'react';
 import { Logo } from '@/components/logo';
 import { Board } from './board';
+import { Score } from './score';
 
 type GameProps = {
   goHome: () => void;
@@ -21,8 +22,8 @@ export const Game = ({ goHome, playMode }: GameProps) => {
         <div>Restart</div>
       </div>
       <div>
-        <div>Red Score</div>
-        <div>Yellow Score</div>
+        <Score playMode={playMode} playerColor="R" value={12} />
+        <Score playMode={playMode} playerColor="Y" value={23} />
         <Board
           counterDropped={counterDropped}
           currentPlayerColor={currentPlayerColor}
