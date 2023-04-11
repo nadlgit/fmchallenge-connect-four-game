@@ -1,0 +1,25 @@
+.header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  place-items: center;
+}
+.header > :first-child {
+  justify-self: start;
+}
+.header > :last-child {
+  justify-self: end;
+}
+
+.button {
+  composes: heading-xs from global;
+  display: inline-block;
+  text-transform: uppercase;
+  padding: 0.625rem 1.25rem;
+  color: var(--color-white);
+  border-radius: 1.25rem;
+  border: none;
+  background-color: var(--color-dark-purple);
+}
+.button:hover {
+  background-color: var(--color-red);
+}

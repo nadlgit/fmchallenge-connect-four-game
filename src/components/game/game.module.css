@@ -1,0 +1,41 @@
+.layout {
+  display: grid;
+  grid-template-areas:
+    'header header'
+    'scoreleft scoreright'
+    'board board'
+    'timer timer';
+}
+.header {
+  grid-area: header;
+}
+.scoreleft {
+  grid-area: scoreleft;
+  justify-self: start;
+}
+.scoreright {
+  grid-area: scoreright;
+  justify-self: end;
+}
+.board {
+  grid-area: board;
+  justify-self: center;
+}
+.timer {
+  grid-area: timer;
+  justify-self: center;
+}
+
+@media screen and (min-width: 64rem) and (min-height: 37.5rem) {
+  .layout {
+    display: grid;
+    grid-template-areas:
+      '. header .'
+      'scoreleft board scoreright'
+      '. timer .';
+  }
+  .scoreleft,
+  .scoreright {
+    place-self: center;
+  }
+}

@@ -1,8 +1,9 @@
 import { type ComponentPropsWithoutRef, useState } from 'react';
-import { Logo } from '@/components/logo';
 import { Board } from './board';
+import { Header } from './header';
 import { Score } from './score';
 import { Timer } from './timer';
+import styles from './game.module.css';
 
 type GameProps = {
   goHome: () => void;
@@ -16,15 +17,20 @@ export const Game = ({ goHome, playMode }: GameProps) => {
     useState<ComponentPropsWithoutRef<typeof Board>['currentPlayerColor']>('R');
 
   return (
-    <div>
-      <div>
-        <div>Menu</div>
-        <Logo />
-        <div>Restart</div>
+    <div className={styles.layout}>
+      <div className={styles.header}>
+        <Header
+          showMenu={() => console.log('click on menu')}
+          restart={() => console.log('click on restart')}
+        />
       </div>
-      <div>
+      <div className={styles.scoreleft}>
         <Score playMode={playMode} playerColor="R" value={12} />
+      </div>
+      <div className={styles.scoreright}>
         <Score playMode={playMode} playerColor="Y" value={23} />
+      </div>
+      <div className={styles.board}>
         <Board
           counterDropped={counterDropped}
           currentPlayerColor={currentPlayerColor}
@@ -33,6 +39,8 @@ export const Game = ({ goHome, playMode }: GameProps) => {
             setCurrentPlayerColor((c) => (c === 'R' ? 'Y' : 'R'));
           }}
         />
+      </div>
+      <div className={styles.timer}>
         <Timer playMode={playMode} playerColor="R" value={30} />
       </div>
     </div>
