@@ -1,14 +1,16 @@
 .container {
+  --box-shadow-offset-y: 0.625rem;
   position: relative;
   width: 8.875rem;
   height: 5.0625rem;
+  margin-bottom: var(--box-shadow-offset-y);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 1.25rem;
   border: 0.1875rem solid var(--color-black);
-  box-shadow: 0 0.625rem 0 var(--color-black);
+  box-shadow: 0 var(--box-shadow-offset-y) 0 var(--color-black);
   background-color: var(--color-white);
 }
 

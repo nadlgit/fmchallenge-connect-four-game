@@ -1,41 +1,65 @@
 .layout {
+  --board-zone-width: 22rem;
+  --timer-top-offset: -1.75rem;
+  --score-inner-margin-inline: 0.5rem;
+  min-height: 100%;
   display: grid;
   grid-template-areas:
     'header header'
     'scoreleft scoreright'
     'board board'
     'timer timer';
+  grid-template-columns: repeat(2, calc(var(--board-zone-width) / 2));
+  grid-template-rows: 10% 18% auto 1fr;
+  padding: 1rem calc((100% - var(--board-zone-width)) / 2);
 }
 .header {
   grid-area: header;
+  align-self: end;
+  margin-bottom: 1rem;
 }
 .scoreleft {
   grid-area: scoreleft;
-  justify-self: start;
+  justify-self: end;
+  align-self: center;
+  margin-right: var(--score-inner-margin-inline);
 }
 .scoreright {
   grid-area: scoreright;
-  justify-self: end;
+  justify-self: start;
+  align-self: center;
+  margin-left: var(--score-inner-margin-inline);
 }
 .board {
   grid-area: board;
   justify-self: center;
+  align-self: end;
 }
 .timer {
   grid-area: timer;
   justify-self: center;
+  z-index: 1;
+  margin-top: var(--timer-top-offset);
+}
+
+@media screen and (min-width: 40rem) and (min-height: 37.5rem) {
+  .layout {
+    --board-zone-width: 40rem;
+    --timer-top-offset: -3.25rem;
+    --score-inner-margin-inline: 1.3125rem;
+  }
 }
 
 @media screen and (min-width: 64rem) and (min-height: 37.5rem) {
   .layout {
+    --score-inner-margin-inline: 3.75rem;
     display: grid;
     grid-template-areas:
       '. header .'
       'scoreleft board scoreright'
       '. timer .';
-  }
-  .scoreleft,
-  .scoreright {
-    place-self: center;
+    grid-template-columns: 1fr var(--board-zone-width) 1fr;
+    grid-template-rows: 10% auto 1fr;
+    padding: 1rem;
   }
 }
