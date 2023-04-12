@@ -1,6 +1,7 @@
 import { type ComponentPropsWithoutRef, useState } from 'react';
 import { Board } from './board';
 import { Header } from './header';
+import { IngameMenu } from './menu';
 import { Score } from './score';
 import { Timer } from './timer';
 import styles from './game.module.css';
@@ -15,14 +16,27 @@ export const Game = ({ goHome, playMode }: GameProps) => {
     useState<ComponentPropsWithoutRef<typeof Board>['counterDropped']>();
   const [currentPlayerColor, setCurrentPlayerColor] =
     useState<ComponentPropsWithoutRef<typeof Board>['currentPlayerColor']>('R');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleRestart = () => console.log('click on restart');
+
+  const handleCloseIngameMenu: ComponentPropsWithoutRef<typeof IngameMenu>['onClose'] = (
+    choice
+  ) => {
+    setIsMenuOpen(false);
+    if (choice === 'quit') {
+      goHome();
+    }
+    if (choice === 'restart') {
+      handleRestart();
+    }
+  };
 
   return (
     <div className={styles.layout}>
       <div className={styles.header}>
-        <Header
-          showMenu={() => console.log('click on menu')}
-          restart={() => console.log('click on restart')}
-        />
+        <Header showMenu={() => setIsMenuOpen(true)} restart={handleRestart} />
+        {isMenuOpen && <IngameMenu onClose={handleCloseIngameMenu} />}
       </div>
       <div className={styles.scoreleft}>
         <Score playMode={playMode} playerColor="R" value={12} />

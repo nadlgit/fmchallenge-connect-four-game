@@ -1,0 +1,52 @@
+.backdrop {
+  position: absolute;
+  z-index: 20;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  height: 100%;
+  background-color: var(--color-black-backdrop);
+}
+
+.content {
+  display: grid;
+  gap: 1.25rem;
+  width: min(25rem, calc(100vw - 2.5rem));
+  padding: clamp(1.875rem, calc(2.544vw + 1.278rem), 2.5rem);
+  border-radius: 2.5rem;
+  border: 0.1875rem solid var(--color-black);
+  box-shadow: 0 0.625rem 0 var(--color-black);
+  background-color: var(--color-purple);
+}
+
+.title {
+  composes: heading-l from global;
+  color: var(--color-white);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.button {
+  composes: heading-m from global;
+  --border-color: var(--color-black);
+  --box-shadow-offset-y: 0.625rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem;
+  margin-bottom: var(--box-shadow-offset-y);
+  height: 4.5rem;
+  border-radius: 1.25rem;
+  border: 0.1875rem solid var(--border-color);
+  box-shadow: 0 var(--box-shadow-offset-y) 0 var(--border-color);
+  background-color: var(--color-white);
+  text-transform: uppercase;
+}
+.button:hover {
+  --border-color: var(--color-dark-purple);
+}
+
+.buttonred {
+  color: var(--color-white);
+  background-color: var(--color-red);
+}

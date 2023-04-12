@@ -32,6 +32,7 @@ body,
 
 :root {
   --color-black: hsl(0, 0%, 0%);
+  --color-black-backdrop: hsla(0, 0%, 0%, 0.5);
   --color-dark-purple: hsl(257, 67%, 51%);
   --color-purple: hsl(257, 100%, 64%);
   --color-red: hsl(347, 98%, 70%);
