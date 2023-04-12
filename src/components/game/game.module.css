@@ -37,10 +37,22 @@
 }
 .screenbottom {
   grid-area: screenbottom;
+  position: relative;
   justify-self: center;
   z-index: 1;
   margin-top: var(--timer-top-offset);
 }
+.screenbottom > :last-child {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+}
+.screenbottom.endgame > :last-child {
+  animation: appear 0.1s 0.5s forwards;
+}
+.layout::before,
 .layout::after {
   grid-area: screenbottom;
   content: '';
@@ -51,6 +63,25 @@
   margin-inline: calc(-1 * (100vw - var(--board-zone-width)) / 2);
   border-radius: 3.75rem 3.75rem 0 0;
   background-color: var(--color-dark-purple);
+}
+.layout.bottomred::after {
+  background-color: var(--color-red);
+}
+.layout.bottomyellow::after {
+  background-color: var(--color-yellow);
+}
+.layout.bottomred::after,
+.layout.bottomyellow::after {
+  opacity: 0;
+  animation: appear 0.1s 0.5s forwards;
+}
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media screen and (min-width: 40rem) and (min-height: 37.5rem) {

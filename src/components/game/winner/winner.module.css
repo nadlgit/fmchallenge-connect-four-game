@@ -1,0 +1,38 @@
+.container {
+  --box-shadow-offset-y: 0.625rem;
+  width: 17.8125rem;
+  height: 10rem;
+  margin-bottom: var(--box-shadow-offset-y);
+  padding: 1.625rem;
+  display: grid;
+  place-items: center;
+  border-radius: 1.25rem;
+  border: 0.1875rem solid var(--color-black);
+  box-shadow: 0 var(--box-shadow-offset-y) 0 var(--color-black);
+  background-color: var(--color-white);
+}
+
+.player {
+  composes: heading-xs from global;
+  text-transform: uppercase;
+  line-height: 0.25rem;
+}
+
+.wins {
+  composes: heading-l from global;
+  text-transform: uppercase;
+}
+
+.button {
+  composes: heading-xs from global;
+  display: inline-block;
+  text-transform: uppercase;
+  padding: 0.625rem 1.25rem;
+  color: var(--color-white);
+  border-radius: 1.25rem;
+  border: none;
+  background-color: var(--color-dark-purple);
+}
+.button:hover {
+  background-color: var(--color-red);
+}

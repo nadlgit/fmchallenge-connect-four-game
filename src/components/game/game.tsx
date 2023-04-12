@@ -1,10 +1,11 @@
 import { type ComponentPropsWithoutRef, useState } from 'react';
-import { Board } from './board';
+import { Board, BoardEndGame } from './board';
 import { Header } from './header';
 import { IngameMenu } from './menu';
 import { Score } from './score';
 import { Timer } from './timer';
 import styles from './game.module.css';
+import { Winner } from './winner';
 
 type GameProps = {
   goHome: () => void;
@@ -18,7 +19,9 @@ export const Game = ({ goHome, playMode }: GameProps) => {
     useState<ComponentPropsWithoutRef<typeof Board>['currentPlayerColor']>('R');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleRestart = () => console.log('click on restart');
+  // const handleRestart = () => console.log('click on restart');
+  const [isEndGame, setIsEndGame] = useState(false);
+  const handleRestart = () => setIsEndGame(true);
 
   const handleCloseIngameMenu: ComponentPropsWithoutRef<typeof IngameMenu>['onClose'] = (
     choice
@@ -33,7 +36,7 @@ export const Game = ({ goHome, playMode }: GameProps) => {
   };
 
   return (
-    <div className={styles.layout}>
+    <div className={`${styles.layout} ${isEndGame ? styles.bottomred : ''}`}>
       <div className={styles.header}>
         <Header showMenu={() => setIsMenuOpen(true)} restart={handleRestart} />
         {isMenuOpen && <IngameMenu onClose={handleCloseIngameMenu} />}
@@ -45,17 +48,32 @@ export const Game = ({ goHome, playMode }: GameProps) => {
         <Score playMode={playMode} playerColor="Y" value={23} />
       </div>
       <div className={styles.board}>
-        <Board
-          counterDropped={counterDropped}
-          currentPlayerColor={currentPlayerColor}
-          selectColumn={(column: number) => {
-            setCounterDropped({ column, row: 1, color: currentPlayerColor });
-            setCurrentPlayerColor((c) => (c === 'R' ? 'Y' : 'R'));
-          }}
-        />
+        {isEndGame ? (
+          <BoardEndGame
+            counters={[
+              { row: 1, column: 1, color: 'R', isWin: true },
+              { row: 1, column: 2, color: 'R', isWin: true },
+              { row: 1, column: 3, color: 'R', isWin: true },
+              { row: 1, column: 4, color: 'R', isWin: true, dropOffset: 6 },
+              { row: 2, column: 1, color: 'Y' },
+              { row: 2, column: 2, color: 'Y' },
+              { row: 2, column: 3, color: 'Y' },
+            ]}
+          />
+        ) : (
+          <Board
+            counterDropped={counterDropped}
+            currentPlayerColor={currentPlayerColor}
+            selectColumn={(column: number) => {
+              setCounterDropped({ column, row: 1, color: currentPlayerColor });
+              setCurrentPlayerColor((c) => (c === 'R' ? 'Y' : 'R'));
+            }}
+          />
+        )}
       </div>
-      <div className={styles.screenbottom}>
+      <div className={`${styles.screenbottom} ${isEndGame ? styles.endgame : ''}`}>
         <Timer playMode={playMode} playerColor="R" value={30} />
+        <Winner winner="player1" playAgain={() => {}} />
       </div>
     </div>
   );
