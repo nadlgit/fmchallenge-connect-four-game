@@ -8,7 +8,7 @@
     'header header'
     'scoreleft scoreright'
     'board board'
-    'timer timer';
+    'screenbottom screenbottom';
   grid-template-columns: repeat(2, calc(var(--board-zone-width) / 2));
   grid-template-rows: 10% 18% auto 1fr;
   padding: 1rem calc((100% - var(--board-zone-width)) / 2);
@@ -35,11 +35,22 @@
   justify-self: center;
   align-self: end;
 }
-.timer {
-  grid-area: timer;
+.screenbottom {
+  grid-area: screenbottom;
   justify-self: center;
   z-index: 1;
   margin-top: var(--timer-top-offset);
+}
+.layout::after {
+  grid-area: screenbottom;
+  content: '';
+  z-index: -2;
+  display: block;
+  margin-top: calc(var(--timer-top-offset) + 0.625rem);
+  margin-bottom: -1rem;
+  margin-inline: calc(-1 * (100vw - var(--board-zone-width)) / 2);
+  border-radius: 3.75rem 3.75rem 0 0;
+  background-color: var(--color-dark-purple);
 }
 
 @media screen and (min-width: 40rem) and (min-height: 37.5rem) {
@@ -47,6 +58,9 @@
     --board-zone-width: 40rem;
     --timer-top-offset: -3.25rem;
     --score-inner-margin-inline: 1.3125rem;
+  }
+  .layout::after {
+    margin-top: var(--timer-top-offset);
   }
 }
 
@@ -57,9 +71,12 @@
     grid-template-areas:
       '. header .'
       'scoreleft board scoreright'
-      '. timer .';
+      'screenbottom screenbottom screenbottom';
     grid-template-columns: 1fr var(--board-zone-width) 1fr;
     grid-template-rows: 10% auto 1fr;
     padding: 1rem;
+  }
+  .layout::after {
+    margin-inline: -1rem;
   }
 }

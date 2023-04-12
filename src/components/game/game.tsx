@@ -54,7 +54,7 @@ export const Game = ({ goHome, playMode }: GameProps) => {
           }}
         />
       </div>
-      <div className={styles.timer}>
+      <div className={styles.screenbottom}>
         <Timer playMode={playMode} playerColor="R" value={30} />
       </div>
     </div>
