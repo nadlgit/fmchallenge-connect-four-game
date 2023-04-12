@@ -10,11 +10,11 @@
   display: grid;
   justify-content: center;
   font-size: 0.5rem;
+  color: lightgray;
 }
 .footer a {
-  text-decoration: none;
-  color: var(--color-yellow);
+  color: inherit;
 }
 .footer a:hover {
-  color: var(--color-red);
+  color: chocolate;
 }
