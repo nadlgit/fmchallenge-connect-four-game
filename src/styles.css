@@ -51,6 +51,9 @@ body {
 body.bg-darker {
   background-color: var(--color-dark-purple);
 }
+body.noscroll {
+  overflow: hidden;
+}
 
 .heading-l {
   font-weight: 700;

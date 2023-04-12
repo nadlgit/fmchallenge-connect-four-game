@@ -8,10 +8,9 @@ type MenuModalProps = {
 
 export const IngameMenu = ({ onClose }: MenuModalProps) => {
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
+    const bodyClass = 'noscroll';
+    document.body.classList.add(bodyClass);
+    return () => document.body.classList.remove(bodyClass);
   }, []);
 
   return createPortal(
