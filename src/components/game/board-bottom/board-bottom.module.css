@@ -8,6 +8,7 @@
 }
 
 .container {
+  --board-bottom-margin-top: 0.625rem;
   display: grid;
   grid-template-areas: 'container';
   height: 100%;
@@ -19,8 +20,8 @@
   grid-area: container;
   z-index: -2;
   display: block;
-  height: 100%;
-  margin-top: 0.625rem;
+  height: calc(100% - var(--board-bottom-margin-top));
+  margin-top: var(--board-bottom-margin-top);
   border-radius: 3.75rem 3.75rem 0 0;
   background-color: var(--color-dark-purple);
 }
@@ -33,7 +34,7 @@
 .container.bottomred::after,
 .container.bottomyellow::after {
   opacity: 0;
-  animation: appear 0.1s 0.5s forwards;
+  animation: appear 0.3s 0.4s forwards;
 }
 
 .timer,
@@ -117,8 +118,7 @@
 }
 
 @media screen and (min-width: 40rem) and (min-height: 37.5rem) {
-  .container::before,
-  .container::after {
-    margin-top: 0;
+  .container {
+    --board-bottom-margin-top: 0;
   }
 }

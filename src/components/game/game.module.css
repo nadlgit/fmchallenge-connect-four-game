@@ -9,19 +9,20 @@
     '. scoreleft scoreright .'
     '. boardmain boardmain .'
     'boardbottom boardbottom boardbottom boardbottom';
-  grid-template-columns: 1fr repeat(2, calc(var(--board-zone-width) / 2)) 1fr;
+  grid-template-columns: auto repeat(2, calc(var(--board-zone-width) / 2)) auto;
   grid-template-rows: 10% 18% auto 1fr;
-  padding: 1rem;
+  padding-top: 1rem;
 }
 .header {
   grid-area: header;
   align-self: end;
-  margin-bottom: 1rem;
+  margin: 1rem;
 }
 .scoreleft {
   grid-area: scoreleft;
   justify-self: end;
   align-self: center;
+  margin-left: 1rem;
   margin-right: var(--score-inner-margin-inline);
 }
 .scoreright {
@@ -29,17 +30,17 @@
   justify-self: start;
   align-self: center;
   margin-left: var(--score-inner-margin-inline);
+  margin-right: 1rem;
 }
 .boardmain {
   grid-area: boardmain;
   justify-self: center;
   align-self: end;
+  margin-inline: 1rem;
 }
 .boardbottom {
   grid-area: boardbottom;
-  height: calc(100% - var(--timer-top-offset) + 1rem);
   margin-top: var(--timer-top-offset);
-  margin-inline: -1rem;
 }
 
 @media screen and (min-width: 40rem) and (min-height: 37.5rem) {
