@@ -1,0 +1,124 @@
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.container {
+  display: grid;
+  grid-template-areas: 'container';
+  height: 100%;
+}
+
+.container::before,
+.container::after {
+  content: '';
+  grid-area: container;
+  z-index: -2;
+  display: block;
+  height: 100%;
+  margin-top: 0.625rem;
+  border-radius: 3.75rem 3.75rem 0 0;
+  background-color: var(--color-dark-purple);
+}
+.container.bottomred::after {
+  background-color: var(--color-red);
+}
+.container.bottomyellow::after {
+  background-color: var(--color-yellow);
+}
+.container.bottomred::after,
+.container.bottomyellow::after {
+  opacity: 0;
+  animation: appear 0.1s 0.5s forwards;
+}
+
+.timer,
+.winner {
+  grid-area: container;
+  justify-self: center;
+  z-index: 1;
+}
+
+.timer {
+  width: 11.9375rem;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+}
+.timer[data-color='R'] {
+  background-image: url('./turn-background-red.svg');
+  color: var(--color-white);
+}
+.timer[data-color='Y'] {
+  background-image: url('./turn-background-yellow.svg');
+}
+
+.label {
+  composes: heading-xs from global;
+  display: inline-block;
+  width: max-content;
+  margin-top: 0.75rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.value {
+  composes: heading-l from global;
+}
+
+.winner {
+  --box-shadow-offset-y: 0.625rem;
+  width: 17.8125rem;
+  height: 10rem;
+  margin-bottom: var(--box-shadow-offset-y);
+  padding: 1.625rem;
+  display: grid;
+  place-items: center;
+  border-radius: 1.25rem;
+  border: 0.1875rem solid var(--color-black);
+  box-shadow: 0 var(--box-shadow-offset-y) 0 var(--color-black);
+  background-color: var(--color-white);
+  opacity: 0;
+}
+.winner.endgame {
+  animation: appear 0.1s 0.5s forwards;
+}
+
+.player {
+  composes: heading-xs from global;
+  text-transform: uppercase;
+  line-height: 0.25rem;
+}
+
+.wins {
+  composes: heading-l from global;
+  text-transform: uppercase;
+}
+
+.button {
+  composes: heading-xs from global;
+  display: inline-block;
+  text-transform: uppercase;
+  padding: 0.625rem 1.25rem;
+  color: var(--color-white);
+  border-radius: 1.25rem;
+  border: none;
+  background-color: var(--color-dark-purple);
+}
+.button:hover {
+  background-color: var(--color-red);
+}
+
+@media screen and (min-width: 40rem) and (min-height: 37.5rem) {
+  .container::before,
+  .container::after {
+    margin-top: 0;
+  }
+}

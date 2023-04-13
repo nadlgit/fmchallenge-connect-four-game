@@ -5,13 +5,13 @@
   min-height: 100%;
   display: grid;
   grid-template-areas:
-    'header header'
-    'scoreleft scoreright'
-    'board board'
-    'screenbottom screenbottom';
-  grid-template-columns: repeat(2, calc(var(--board-zone-width) / 2));
+    '. header header .'
+    '. scoreleft scoreright .'
+    '. boardmain boardmain .'
+    'boardbottom boardbottom boardbottom boardbottom';
+  grid-template-columns: 1fr repeat(2, calc(var(--board-zone-width) / 2)) 1fr;
   grid-template-rows: 10% 18% auto 1fr;
-  padding: 1rem calc((100% - var(--board-zone-width)) / 2);
+  padding: 1rem;
 }
 .header {
   grid-area: header;
@@ -30,58 +30,16 @@
   align-self: center;
   margin-left: var(--score-inner-margin-inline);
 }
-.board {
-  grid-area: board;
+.boardmain {
+  grid-area: boardmain;
   justify-self: center;
   align-self: end;
 }
-.screenbottom {
-  grid-area: screenbottom;
-  position: relative;
-  justify-self: center;
-  z-index: 1;
+.boardbottom {
+  grid-area: boardbottom;
+  height: calc(100% - var(--timer-top-offset) + 1rem);
   margin-top: var(--timer-top-offset);
-}
-.screenbottom > :last-child {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-}
-.screenbottom.endgame > :last-child {
-  animation: appear 0.1s 0.5s forwards;
-}
-.layout::before,
-.layout::after {
-  grid-area: screenbottom;
-  content: '';
-  z-index: -2;
-  display: block;
-  margin-top: calc(var(--timer-top-offset) + 0.625rem);
-  margin-bottom: -1rem;
-  margin-inline: calc(-1 * (100vw - var(--board-zone-width)) / 2);
-  border-radius: 3.75rem 3.75rem 0 0;
-  background-color: var(--color-dark-purple);
-}
-.layout.bottomred::after {
-  background-color: var(--color-red);
-}
-.layout.bottomyellow::after {
-  background-color: var(--color-yellow);
-}
-.layout.bottomred::after,
-.layout.bottomyellow::after {
-  opacity: 0;
-  animation: appear 0.1s 0.5s forwards;
-}
-@keyframes appear {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  margin-inline: -1rem;
 }
 
 @media screen and (min-width: 40rem) and (min-height: 37.5rem) {
@@ -89,9 +47,6 @@
     --board-zone-width: 40rem;
     --timer-top-offset: -3.25rem;
     --score-inner-margin-inline: 1.3125rem;
-  }
-  .layout::after {
-    margin-top: var(--timer-top-offset);
   }
 }
 
@@ -101,13 +56,9 @@
     display: grid;
     grid-template-areas:
       '. header .'
-      'scoreleft board scoreright'
-      'screenbottom screenbottom screenbottom';
+      'scoreleft boardmain scoreright'
+      'boardbottom boardbottom boardbottom';
     grid-template-columns: 1fr var(--board-zone-width) 1fr;
     grid-template-rows: 10% auto 1fr;
-    padding: 1rem;
-  }
-  .layout::after {
-    margin-inline: -1rem;
   }
 }

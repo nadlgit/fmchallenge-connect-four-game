@@ -49,10 +49,10 @@
   background-image: var(--counter-yellow-url);
 }
 
-.cell.dropping {
-  animation: drop var(--drop-duration) ease-in;
+.cell.celldropping {
+  animation: celldrop var(--drop-duration) ease-in;
 }
-@keyframes drop {
+@keyframes celldrop {
   0% {
     transform: translateY(calc(-1 * var(--drop-offset) * (var(--counter-width) + var(--grid-gap))));
   }
@@ -67,7 +67,7 @@
   }
 }
 
-.cell.win::after {
+.cell.cellwin::after {
   content: '';
   display: block;
   width: var(--counter-win-width);
@@ -75,9 +75,9 @@
   border-radius: 100vmax;
   border: 0.375rem solid var(--color-white);
   visibility: hidden;
-  animation: win 1s 0.6s steps(2, start) infinite;
+  animation: cellwin 1s 0.6s steps(2, start) infinite;
 }
-@keyframes win {
+@keyframes cellwin {
   from {
     visibility: visible;
   }
