@@ -1,5 +1,5 @@
 .layout {
-  --board-zone-width: 22rem;
+  --board-zone-width: 20.9375rem;
   --timer-top-offset: -1.75rem;
   --score-inner-margin-inline: 0.5rem;
   min-height: 100%;
@@ -11,12 +11,10 @@
     'boardbottom boardbottom boardbottom boardbottom';
   grid-template-columns: auto repeat(2, calc(var(--board-zone-width) / 2)) auto;
   grid-template-rows: 10% 18% auto 1fr;
-  padding-top: 1rem;
 }
 .header {
   grid-area: header;
   align-self: end;
-  margin: 1rem;
 }
 .scoreleft {
   grid-area: scoreleft;
@@ -36,7 +34,6 @@
   grid-area: boardmain;
   justify-self: center;
   align-self: end;
-  margin-inline: 1rem;
 }
 .boardbottom {
   grid-area: boardbottom;
@@ -45,7 +42,7 @@
 
 @media screen and (min-width: 40rem) and (min-height: 37.5rem) {
   .layout {
-    --board-zone-width: 40rem;
+    --board-zone-width: 39.5rem;
     --timer-top-offset: -3.25rem;
     --score-inner-margin-inline: 1.3125rem;
   }
