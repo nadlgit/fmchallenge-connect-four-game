@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { BOARD_COLUMNS, BOARD_ROWS, type Player } from '@/core';
+import { type Player } from '@/core';
 import styles from './board-bottom.module.css';
 
 type BoardBottomProps = {
