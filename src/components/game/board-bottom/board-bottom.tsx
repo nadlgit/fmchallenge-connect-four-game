@@ -1,69 +1,69 @@
 import { useEffect, useState } from 'react';
-import { GRID_COLUMNS, GRID_ROWS, type PlayerColor } from '@/core';
+import { BOARD_COLUMNS, BOARD_ROWS, type Player } from '@/core';
 import styles from './board-bottom.module.css';
 
 type BoardBottomProps = {
   playMode: 'vsPlayer' | 'vsCPU';
-  playerColor: PlayerColor;
+  player: Player;
   isPaused: boolean;
-  winnerColor?: PlayerColor | 'none';
+  winner?: Player | 'none';
   onTimeout: () => void;
   onPlayAgain: () => void;
 };
 
 export const BoardBottom = ({
   playMode,
-  playerColor,
+  player,
   isPaused,
-  winnerColor,
+  winner,
   onTimeout,
   onPlayAgain,
 }: BoardBottomProps) => {
   const label = (() => {
-    if (playMode === 'vsPlayer' && playerColor === 'R') {
+    if (playMode === 'vsPlayer' && player === 'R') {
       return "Player 1's turn";
     }
-    if (playMode === 'vsPlayer' && playerColor === 'Y') {
+    if (playMode === 'vsPlayer' && player === 'Y') {
       return "Player 2's turn";
     }
-    if (playMode === 'vsCPU' && playerColor === 'R') {
+    if (playMode === 'vsCPU' && player === 'R') {
       return 'Your turn';
     }
-    if (playMode === 'vsCPU' && playerColor === 'Y') {
+    if (playMode === 'vsCPU' && player === 'Y') {
       return "CPU's turn";
     }
     return '';
   })();
   const value = 30;
-  const { player, wins } = (() => {
-    if (playMode === 'vsPlayer' && winnerColor === 'R') {
-      return { player: 'Player 1', wins: 'wins' };
+  const { winnerLabel, verbLabel } = (() => {
+    if (playMode === 'vsPlayer' && winner === 'R') {
+      return { winnerLabel: 'Player 1', verbLabel: 'wins' };
     }
-    if (playMode === 'vsPlayer' && winnerColor === 'Y') {
-      return { player: 'Player 2', wins: 'wins' };
+    if (playMode === 'vsPlayer' && winner === 'Y') {
+      return { winnerLabel: 'Player 2', verbLabel: 'wins' };
     }
-    if (playMode === 'vsCPU' && winnerColor === 'R') {
-      return { player: 'You', wins: 'win' };
+    if (playMode === 'vsCPU' && winner === 'R') {
+      return { winnerLabel: 'You', verbLabel: 'win' };
     }
-    if (playMode === 'vsCPU' && winnerColor === 'Y') {
-      return { player: 'CPU', wins: 'wins' };
+    if (playMode === 'vsCPU' && winner === 'Y') {
+      return { winnerLabel: 'CPU', verbLabel: 'wins' };
     }
-    return { player: '', wins: 'tie' };
+    return { winnerLabel: '', verbLabel: 'tie' };
   })();
 
   return (
     <div
       className={`${styles.container} ${
-        winnerColor === 'R' ? styles.bottomred : winnerColor === 'Y' ? styles.bottomyellow : ''
+        winner === 'R' ? styles.bottomred : winner === 'Y' ? styles.bottomyellow : ''
       }`}
     >
-      <div className={styles.timer} data-color={playerColor}>
+      <div className={styles.timer} data-color={player}>
         <span className={styles.label}>{label}</span>
         <span className={styles.value}>{`${value}s`}</span>
       </div>
-      <div className={`${styles.winner} ${winnerColor ? styles.endgame : ''}`}>
-        <span className={styles.player}>{player}</span>
-        <span className={styles.wins}>{wins}</span>
+      <div className={`${styles.winner} ${winner ? styles.endgame : ''}`}>
+        <span className={styles.player}>{winnerLabel}</span>
+        <span className={styles.wins}>{verbLabel}</span>
         <button className={styles.button} onClick={onPlayAgain}>
           Play again
         </button>

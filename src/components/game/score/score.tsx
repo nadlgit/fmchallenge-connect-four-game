@@ -1,15 +1,15 @@
-import { type PlayerColor } from '@/core';
+import { type Player } from '@/core';
 import styles from './score.module.css';
 import imgPlayer1 from './player-one.svg';
 import imgPlayer2 from './player-two.svg';
 import imgYou from './you.svg';
 import imgCPU from './cpu.svg';
 
-type ScoreProps = { playMode: 'vsPlayer' | 'vsCPU'; playerColor: PlayerColor; value: number };
+type ScoreProps = { playMode: 'vsPlayer' | 'vsCPU'; player: Player; value: number };
 
 const scoreConfig: Record<
   ScoreProps['playMode'],
-  Record<ScoreProps['playerColor'], { label: string; icon: string; position: 'left' | 'right' }>
+  Record<ScoreProps['player'], { label: string; icon: string; position: 'left' | 'right' }>
 > = {
   vsPlayer: {
     R: { label: 'Player 1', icon: imgPlayer1, position: 'left' },
@@ -21,8 +21,8 @@ const scoreConfig: Record<
   },
 };
 
-export const Score = ({ playMode, playerColor, value }: ScoreProps) => {
-  const { label, icon, position } = scoreConfig[playMode][playerColor];
+export const Score = ({ playMode, player, value }: ScoreProps) => {
+  const { label, icon, position } = scoreConfig[playMode][player];
   return (
     <div className={styles.container} data-position={position}>
       <img src={icon} alt="" className={styles.icon} />

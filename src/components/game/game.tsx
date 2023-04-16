@@ -14,13 +14,13 @@ type GameProps = {
 export const Game = ({ goHome, playMode }: GameProps) => {
   const [fakeCounterDropped, setFakeCounterDropped] =
     useState<ComponentPropsWithoutRef<typeof BoardMain>['counterDropped']>();
-  const [fakePlayerColor, setFakePlayerColor] =
-    useState<ComponentPropsWithoutRef<typeof BoardMain>['playerColor']>('R');
+  const [fakePlayer, setFakePlayer] =
+    useState<ComponentPropsWithoutRef<typeof BoardMain>['player']>('R');
   const [fakeEndGame, setFakeEndGame] = useState(false);
   const restartGame = () => setFakeEndGame(true);
   const playOnColumn = (column: number) => {
-    setFakeCounterDropped({ column, row: 1, color: fakePlayerColor });
-    setFakePlayerColor((c) => (c === 'R' ? 'Y' : 'R'));
+    setFakeCounterDropped({ column, row: 1, color: fakePlayer });
+    setFakePlayer((c) => (c === 'R' ? 'Y' : 'R'));
   };
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -46,15 +46,15 @@ export const Game = ({ goHome, playMode }: GameProps) => {
         {isMenuOpen && <IngameMenu onClose={closeIngameMenu} />}
       </div>
       <div className={styles.scoreleft}>
-        <Score playMode={playMode} playerColor="R" value={12} />
+        <Score playMode={playMode} player="R" value={12} />
       </div>
       <div className={styles.scoreright}>
-        <Score playMode={playMode} playerColor="Y" value={23} />
+        <Score playMode={playMode} player="Y" value={23} />
       </div>
       <div className={styles.boardmain}>
         <BoardMain
           counterDropped={fakeCounterDropped}
-          playerColor={fakePlayerColor}
+          player={fakePlayer}
           finalCounters={
             fakeEndGame
               ? [
@@ -74,9 +74,9 @@ export const Game = ({ goHome, playMode }: GameProps) => {
       <div className={styles.boardbottom}>
         <BoardBottom
           playMode={playMode}
-          playerColor={fakePlayerColor}
+          player={fakePlayer}
           isPaused={!isMenuOpen && !fakeEndGame}
-          winnerColor={fakeEndGame ? 'R' : undefined}
+          winner={fakeEndGame ? 'R' : undefined}
           onTimeout={handleTimeout}
           onPlayAgain={playAgain}
         />

@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
-import { GRID_COLUMNS, GRID_ROWS, type PlayerColor } from '@/core';
+import { BOARD_COLUMNS, BOARD_ROWS, type Player } from '@/core';
 import styles from './board-main.module.css';
 
 type BoardMainProps = {
   counterDropped?: {
     column: number;
     row: number;
-    color: PlayerColor;
+    color: Player;
   };
-  playerColor: PlayerColor;
+  player: Player;
   finalCounters?: {
     column: number;
     row: number;
-    color: PlayerColor;
+    color: Player;
     isWinPart?: boolean;
   }[];
   onSelectColumn: (column: number) => void;
@@ -20,13 +20,13 @@ type BoardMainProps = {
 
 export const BoardMain = ({
   counterDropped,
-  playerColor,
+  player,
   finalCounters,
   onSelectColumn,
 }: BoardMainProps) => {
   const [grid, setGrid] = useState(
-    new Array(GRID_ROWS * GRID_COLUMNS).fill(undefined) as (
-      | { color: PlayerColor; dropOffset?: number; isWinPart?: boolean }
+    new Array(BOARD_ROWS * BOARD_COLUMNS).fill(undefined) as (
+      | { color: Player; dropOffset?: number; isWinPart?: boolean }
       | undefined
     )[]
   );
@@ -34,15 +34,15 @@ export const BoardMain = ({
 
   useEffect(() => {
     const isSameCell = (column: number, row: number, gridIdx: number) =>
-      column === (gridIdx % GRID_COLUMNS) + 1 &&
-      row === Math.ceil(GRID_ROWS - gridIdx / GRID_COLUMNS);
+      column === (gridIdx % BOARD_COLUMNS) + 1 &&
+      row === Math.ceil(BOARD_ROWS - gridIdx / BOARD_COLUMNS);
     setGrid((g) =>
       g.map((cell, idx) => {
         let updatedCell: typeof cell = cell === undefined ? undefined : { color: cell.color };
         if (counterDropped && isSameCell(counterDropped.column, counterDropped.row, idx)) {
           updatedCell = {
             color: counterDropped.color,
-            dropOffset: GRID_ROWS - counterDropped.row + 1,
+            dropOffset: BOARD_ROWS - counterDropped.row + 1,
           };
         }
         const finalCell = finalCounters?.find(({ column, row }) => isSameCell(column, row, idx));
@@ -83,7 +83,7 @@ export const BoardMain = ({
 
   const gridColumns = !finalCounters && (
     <div className={styles.columns}>
-      {Array.from(new Array(GRID_COLUMNS), (val, idx) => {
+      {Array.from(new Array(BOARD_COLUMNS), (val, idx) => {
         const column = idx + 1;
         return (
           <div
@@ -99,7 +99,7 @@ export const BoardMain = ({
   const gridMarker = (
     <div
       className={styles.marker}
-      data-color={finalCounters ? undefined : playerColor}
+      data-color={finalCounters ? undefined : player}
       style={
         {
           '--marker-column': markerColumn,
