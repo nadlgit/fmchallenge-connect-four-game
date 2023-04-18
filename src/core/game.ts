@@ -3,8 +3,20 @@ import { type GameState } from './game-state';
 export class Game {
   #isRoundEnded: GameState['isRoundEnded'] = false;
   #players: GameState['players'] = {
-    RED: { name: 'Player 1', score: 0, isCurrentPlayer: true, isWinner: false },
-    YELLOW: { name: 'Player 2', score: 0, isCurrentPlayer: false, isWinner: false },
+    RED: {
+      name: 'Player 1',
+      score: 0,
+      isFirstPlayer: true,
+      isCurrentPlayer: true,
+      isWinner: false,
+    },
+    YELLOW: {
+      name: 'Player 2',
+      score: 0,
+      isFirstPlayer: false,
+      isCurrentPlayer: false,
+      isWinner: false,
+    },
   };
   #boardCounters: GameState['boardCounters'] = [];
   #droppedCounter: GameState['droppedCounter'];
@@ -43,8 +55,23 @@ export class Game {
     this.#isRoundEnded = false;
     this.#players.RED.score = 0;
     this.#players.YELLOW.score = 0;
-    this.#players.RED.isCurrentPlayer = true;
-    this.#players.YELLOW.isCurrentPlayer = false;
+    this.#players.RED.isFirstPlayer = true;
+    this.#players.YELLOW.isFirstPlayer = false;
+    this.#players.RED.isCurrentPlayer = this.#players.RED.isFirstPlayer;
+    this.#players.YELLOW.isCurrentPlayer = this.#players.YELLOW.isFirstPlayer;
+    this.#players.RED.isWinner = false;
+    this.#players.YELLOW.isWinner = false;
+    this.#boardCounters = [];
+    this.#droppedCounter = undefined;
+    this.#updatedPlayerScore = undefined;
+  }
+
+  startNewRound() {
+    this.#isRoundEnded = false;
+    this.#players.RED.isFirstPlayer = !this.#players.RED.isFirstPlayer;
+    this.#players.YELLOW.isFirstPlayer = !this.#players.YELLOW.isFirstPlayer;
+    this.#players.RED.isCurrentPlayer = this.#players.RED.isFirstPlayer;
+    this.#players.YELLOW.isCurrentPlayer = this.#players.YELLOW.isFirstPlayer;
     this.#players.RED.isWinner = false;
     this.#players.YELLOW.isWinner = false;
     this.#boardCounters = [];

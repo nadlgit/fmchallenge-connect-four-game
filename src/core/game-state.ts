@@ -6,6 +6,7 @@ export type GameState = {
     [key in PlayerColor]: {
       name: string;
       score: number;
+      isFirstPlayer: boolean;
       isCurrentPlayer: boolean;
       isWinner: boolean;
     };

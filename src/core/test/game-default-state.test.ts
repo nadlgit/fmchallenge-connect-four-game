@@ -15,10 +15,15 @@ describe('Game default state', () => {
     expect(gameState.players.RED.score).toBe(0);
     expect(gameState.players.YELLOW.score).toBe(0);
   });
-  test('current player is RED', () => {
+  test('first player is RED', () => {
     const gameState = new Game().getState();
-    expect(gameState.players.RED.isCurrentPlayer).toBe(true);
-    expect(gameState.players.YELLOW.isCurrentPlayer).toBe(false);
+    expect(gameState.players.RED.isFirstPlayer).toBe(true);
+    expect(gameState.players.YELLOW.isFirstPlayer).toBe(false);
+  });
+  test('current player is first player', () => {
+    const gameState = new Game().getState();
+    expect(gameState.players.RED.isCurrentPlayer).toBe(gameState.players.RED.isFirstPlayer);
+    expect(gameState.players.YELLOW.isCurrentPlayer).toBe(gameState.players.YELLOW.isFirstPlayer);
   });
   test('there is no winner', () => {
     const gameState = new Game().getState();

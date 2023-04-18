@@ -6,8 +6,20 @@ describe('GameStateBuilder', () => {
     expect(state).toStrictEqual({
       isRoundEnded: false,
       players: {
-        RED: { name: 'red', score: -1, isCurrentPlayer: false, isWinner: false },
-        YELLOW: { name: 'yellow', score: -1, isCurrentPlayer: false, isWinner: false },
+        RED: {
+          name: 'red',
+          score: -1,
+          isFirstPlayer: false,
+          isCurrentPlayer: false,
+          isWinner: false,
+        },
+        YELLOW: {
+          name: 'yellow',
+          score: -1,
+          isFirstPlayer: false,
+          isCurrentPlayer: false,
+          isWinner: false,
+        },
       },
       boardCounters: [],
     });
@@ -32,6 +44,21 @@ describe('GameStateBuilder', () => {
     const state = new GameStateBuilder().withYellowPlayerScore(2).build();
     expect(state.players.YELLOW.score).toBe(2);
   });
+  test('withFirstPlayer red player', () => {
+    const state = new GameStateBuilder().withFirstPlayer('RED').build();
+    expect(state.players.RED.isFirstPlayer).toBe(true);
+    expect(state.players.YELLOW.isFirstPlayer).toBe(false);
+  });
+  test('withFirstPlayer yellow player', () => {
+    const state = new GameStateBuilder().withFirstPlayer('YELLOW').build();
+    expect(state.players.RED.isFirstPlayer).toBe(false);
+    expect(state.players.YELLOW.isFirstPlayer).toBe(true);
+  });
+  test('withCurrentPlayer null', () => {
+    const state = new GameStateBuilder().withCurrentPlayer(null).build();
+    expect(state.players.RED.isCurrentPlayer).toBe(false);
+    expect(state.players.YELLOW.isCurrentPlayer).toBe(false);
+  });
   test('withCurrentPlayer red player', () => {
     const state = new GameStateBuilder().withCurrentPlayer('RED').build();
     expect(state.players.RED.isCurrentPlayer).toBe(true);
@@ -41,6 +68,11 @@ describe('GameStateBuilder', () => {
     const state = new GameStateBuilder().withCurrentPlayer('YELLOW').build();
     expect(state.players.RED.isCurrentPlayer).toBe(false);
     expect(state.players.YELLOW.isCurrentPlayer).toBe(true);
+  });
+  test('withWinner null', () => {
+    const state = new GameStateBuilder().withWinner(null).build();
+    expect(state.players.RED.isWinner).toBe(false);
+    expect(state.players.YELLOW.isWinner).toBe(false);
   });
   test('withWinner red player', () => {
     const state = new GameStateBuilder().withWinner('RED').build();
