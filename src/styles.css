@@ -48,7 +48,7 @@ body {
   color: var(--color-black);
   background-color: var(--color-purple);
 }
-body.bg-darker {
+body.bgdarker {
   background-color: var(--color-dark-purple);
 }
 body.noscroll {

@@ -1,4 +1,4 @@
-import { type ComponentPropsWithoutRef, useState } from 'react';
+import { useState } from 'react';
 import { BoardBottom } from './board-bottom';
 import { BoardMain } from './board-main';
 import { Header } from './header';
@@ -12,19 +12,8 @@ type GameProps = {
 };
 
 export const Game = ({ goHome, playMode }: GameProps) => {
-  const [fakeCounterDropped, setFakeCounterDropped] =
-    useState<ComponentPropsWithoutRef<typeof BoardMain>['counterDropped']>();
-  const [fakePlayer, setFakePlayer] =
-    useState<ComponentPropsWithoutRef<typeof BoardMain>['player']>('R');
-  const [fakeEndGame, setFakeEndGame] = useState(false);
-  const restartGame = () => setFakeEndGame(true);
-  const playOnColumn = (column: number) => {
-    setFakeCounterDropped({ column, row: 1, color: fakePlayer });
-    setFakePlayer((c) => (c === 'R' ? 'Y' : 'R'));
-  };
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // const restartGame = () => console.log('restart');
+  const restartGame = () => console.log('restart');
   const openIngameMenu = () => setIsMenuOpen(true);
   const closeIngameMenu = (choice: 'continue' | 'restart' | 'quit') => {
     setIsMenuOpen(false);
@@ -35,9 +24,7 @@ export const Game = ({ goHome, playMode }: GameProps) => {
       restartGame();
     }
   };
-  // const playOnColumn = (column: number) => console.log(`play on column ${column}`);
-  const handleTimeout = () => console.log('timeout');
-  const playAgain = () => console.log('play again');
+  const playOnColumn = (column: number) => console.log(`play on column ${column}`);
 
   return (
     <div className={styles.layout}>
@@ -46,40 +33,27 @@ export const Game = ({ goHome, playMode }: GameProps) => {
         {isMenuOpen && <IngameMenu onClose={closeIngameMenu} />}
       </div>
       <div className={styles.scoreleft}>
-        <Score playMode={playMode} player="R" value={12} />
+        <Score color="R" value={12} />
       </div>
       <div className={styles.scoreright}>
-        <Score playMode={playMode} player="Y" value={23} />
+        <Score color="Y" value={23} />
       </div>
       <div className={styles.boardmain}>
         <BoardMain
-          counterDropped={fakeCounterDropped}
-          player={fakePlayer}
-          finalCounters={
-            fakeEndGame
-              ? [
-                  { row: 1, column: 1, color: 'R', isWinPart: true },
-                  { row: 1, column: 2, color: 'R', isWinPart: true },
-                  { row: 1, column: 3, color: 'R', isWinPart: true },
-                  { row: 1, column: 4, color: 'R', isWinPart: true },
-                  { row: 2, column: 1, color: 'Y' },
-                  { row: 2, column: 2, color: 'Y' },
-                  { row: 2, column: 3, color: 'Y' },
-                ]
-              : undefined
-          }
+          counters={[
+            { row: 1, column: 1, color: 'R', isWinPart: true },
+            { row: 1, column: 2, color: 'R', isWinPart: true },
+            { row: 1, column: 3, color: 'R', isWinPart: true },
+            { row: 1, column: 4, color: 'R', isDropped: true, isWinPart: true },
+            { row: 2, column: 1, color: 'Y' },
+            { row: 2, column: 2, color: 'Y' },
+            { row: 2, column: 3, color: 'Y' },
+          ]}
           onSelectColumn={playOnColumn}
         />
       </div>
       <div className={styles.boardbottom}>
-        <BoardBottom
-          playMode={playMode}
-          player={fakePlayer}
-          isPaused={!isMenuOpen && !fakeEndGame}
-          winner={fakeEndGame ? 'R' : undefined}
-          onTimeout={handleTimeout}
-          onPlayAgain={playAgain}
-        />
+        <BoardBottom />
       </div>
     </div>
   );

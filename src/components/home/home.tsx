@@ -11,7 +11,7 @@ type HomeProps = {
 
 export const Home = ({ showRules, playVsPlayer, playVsCPU }: HomeProps) => {
   useEffect(() => {
-    const bodyClass = 'bg-darker';
+    const bodyClass = 'bgdarker';
     document.body.classList.add(bodyClass);
     return () => document.body.classList.remove(bodyClass);
   }, []);
