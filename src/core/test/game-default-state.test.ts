@@ -1,4 +1,4 @@
-import { Game } from './game';
+import { Game } from '../game';
 
 describe('Game default state', () => {
   test('round is not ended', () => {
@@ -27,7 +27,7 @@ describe('Game default state', () => {
   });
   test('board is empty', () => {
     const gameState = new Game().getState();
-    expect(gameState.boardCounters).toEqual([]);
+    expect(gameState.boardCounters).toStrictEqual([]);
   });
   test('there is no dropped counter', () => {
     const gameState = new Game().getState();
