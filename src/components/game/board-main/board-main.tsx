@@ -1,32 +1,24 @@
 import { useEffect, useState } from 'react';
-import { BOARD_COLUMNS, BOARD_ROWS, type Player } from '@/core';
 import styles from './board-main.module.css';
 
+const BOARD_COLUMNS = 7;
+const BOARD_ROWS = 6;
+
 type BoardMainProps = {
-  counterDropped?: {
+  counters: {
     column: number;
     row: number;
-    color: Player;
-  };
-  player: Player;
-  finalCounters?: {
-    column: number;
-    row: number;
-    color: Player;
+    color: 'R' | 'Y';
+    isDropped?: boolean;
     isWinPart?: boolean;
   }[];
   onSelectColumn: (column: number) => void;
 };
 
-export const BoardMain = ({
-  counterDropped,
-  player,
-  finalCounters,
-  onSelectColumn,
-}: BoardMainProps) => {
+export const BoardMain = ({ counters, onSelectColumn }: BoardMainProps) => {
   const [grid, setGrid] = useState(
     new Array(BOARD_ROWS * BOARD_COLUMNS).fill(undefined) as (
-      | { color: Player; dropOffset?: number; isWinPart?: boolean }
+      | { color: 'R' | 'Y'; dropOffset?: number; isWinPart?: boolean }
       | undefined
     )[]
   );
@@ -39,24 +31,18 @@ export const BoardMain = ({
     setGrid((g) =>
       g.map((cell, idx) => {
         let updatedCell: typeof cell = cell === undefined ? undefined : { color: cell.color };
-        if (counterDropped && isSameCell(counterDropped.column, counterDropped.row, idx)) {
+        const counterCell = counters.find(({ column, row }) => isSameCell(column, row, idx));
+        if (counterCell) {
           updatedCell = {
-            color: counterDropped.color,
-            dropOffset: BOARD_ROWS - counterDropped.row + 1,
-          };
-        }
-        const finalCell = finalCounters?.find(({ column, row }) => isSameCell(column, row, idx));
-        if (finalCell) {
-          updatedCell = {
-            color: finalCell.color,
-            dropOffset: updatedCell?.dropOffset,
-            isWinPart: finalCell.isWinPart,
+            color: counterCell.color,
+            dropOffset: counterCell.isDropped ? BOARD_ROWS - counterCell.row + 1 : undefined,
+            isWinPart: counterCell.isWinPart,
           };
         }
         return updatedCell;
       })
     );
-  }, [counterDropped, finalCounters]);
+  }, [counters]);
 
   const gridCells = grid.map((cell, idx) => {
     const cssClasses = [styles.cell];
@@ -81,7 +67,7 @@ export const BoardMain = ({
     );
   });
 
-  const gridColumns = !finalCounters && (
+  const gridColumns = true && (
     <div className={styles.columns}>
       {Array.from(new Array(BOARD_COLUMNS), (val, idx) => {
         const column = idx + 1;
@@ -99,7 +85,7 @@ export const BoardMain = ({
   const gridMarker = (
     <div
       className={styles.marker}
-      data-color={finalCounters ? undefined : player}
+      data-color="Y"
       style={
         {
           '--marker-column': markerColumn,
