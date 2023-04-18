@@ -4,8 +4,20 @@ export class GameStateBuilder {
   #gameState: GameState = {
     isRoundEnded: false,
     players: {
-      RED: { name: 'red', score: -1, isCurrentPlayer: false, isWinner: false },
-      YELLOW: { name: 'yellow', score: -1, isCurrentPlayer: false, isWinner: false },
+      RED: {
+        name: 'red',
+        score: -1,
+        isFirstPlayer: false,
+        isCurrentPlayer: false,
+        isWinner: false,
+      },
+      YELLOW: {
+        name: 'yellow',
+        score: -1,
+        isFirstPlayer: false,
+        isCurrentPlayer: false,
+        isWinner: false,
+      },
     },
     boardCounters: [],
   };
@@ -39,13 +51,26 @@ export class GameStateBuilder {
     return this;
   }
 
-  withCurrentPlayer(value: keyof GameState['players']) {
-    this.#gameState.players[value].isCurrentPlayer = true;
+  withFirstPlayer(value: keyof GameState['players']) {
+    this.#gameState.players[value].isFirstPlayer = true;
     return this;
   }
 
-  withWinner(value: keyof GameState['players']) {
-    this.#gameState.players[value].isWinner = true;
+  withCurrentPlayer(value: keyof GameState['players'] | null) {
+    for (const [color, details] of Object.entries(this.#gameState.players)) {
+      if (color === value) {
+        details.isCurrentPlayer = true;
+      }
+    }
+    return this;
+  }
+
+  withWinner(value: keyof GameState['players'] | null) {
+    for (const [color, details] of Object.entries(this.#gameState.players)) {
+      if (color === value) {
+        details.isWinner = true;
+      }
+    }
     return this;
   }
 
