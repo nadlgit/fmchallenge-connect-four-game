@@ -2,7 +2,6 @@ import { Board } from './board';
 import { type GameState, type PlayerColor } from './game-state';
 
 export class Game {
-  #isRoundEnded: GameState['isRoundEnded'] = false;
   #players: GameState['players'] = {
     RED: {
       name: 'Player 1',
@@ -20,6 +19,7 @@ export class Game {
     },
   };
   #board = new Board();
+  #victoryCounters: { row: number; column: number }[] = [];
   #droppedCounter: GameState['droppedCounter'];
   #updatedPlayerScore: GameState['updatedPlayerScore'];
 
@@ -31,7 +31,6 @@ export class Game {
       this.#players.YELLOW.name = yellowPlayerName;
     }
     if (gameState) {
-      this.#isRoundEnded = gameState.isRoundEnded;
       this.#players = {
         RED: { ...gameState.players.RED },
         YELLOW: { ...gameState.players.YELLOW },
@@ -43,17 +42,26 @@ export class Game {
   }
 
   getState(): GameState {
+    const boardCounters = this.#board.getCounters();
+    boardCounters.forEach((counter) => {
+      if (
+        this.#victoryCounters.find(
+          ({ row, column }) => row === counter.row && column === counter.column
+        )
+      ) {
+        counter.isWinPart = true;
+      }
+    });
     return {
-      isRoundEnded: this.#isRoundEnded,
+      isRoundEnded: !this.#players.RED.isCurrentPlayer && !this.#players.YELLOW.isCurrentPlayer,
       players: this.#players,
-      boardCounters: this.#board.getCounters(),
+      boardCounters,
       droppedCounter: this.#droppedCounter,
       updatedPlayerScore: this.#updatedPlayerScore,
     };
   }
 
   resetGame() {
-    this.#isRoundEnded = false;
     this.#players.RED.score = 0;
     this.#players.YELLOW.score = 0;
     this.#players.RED.isFirstPlayer = true;
@@ -63,12 +71,12 @@ export class Game {
     this.#players.RED.isWinner = false;
     this.#players.YELLOW.isWinner = false;
     this.#board = new Board();
+    this.#victoryCounters = [];
     this.#droppedCounter = undefined;
     this.#updatedPlayerScore = undefined;
   }
 
   startNewRound() {
-    this.#isRoundEnded = false;
     this.#players.RED.isFirstPlayer = !this.#players.RED.isFirstPlayer;
     this.#players.YELLOW.isFirstPlayer = !this.#players.YELLOW.isFirstPlayer;
     this.#players.RED.isCurrentPlayer = this.#players.RED.isFirstPlayer;
@@ -76,6 +84,7 @@ export class Game {
     this.#players.RED.isWinner = false;
     this.#players.YELLOW.isWinner = false;
     this.#board = new Board();
+    this.#victoryCounters = [];
     this.#droppedCounter = undefined;
     this.#updatedPlayerScore = undefined;
   }
@@ -86,8 +95,18 @@ export class Game {
       return;
     }
     const row = this.#board.addCounter(color, column);
-    if (row) {
-      this.#droppedCounter = { row, column };
+    if (!row) {
+      return;
+    }
+    this.#droppedCounter = { row, column };
+    this.#victoryCounters = this.#board.checkVictoryForPosition(row, column);
+    if (this.#victoryCounters.length > 0) {
+      this.#players.RED.isCurrentPlayer = false;
+      this.#players.YELLOW.isCurrentPlayer = false;
+      this.#players[color].isWinner = true;
+      this.#players[color].score += 1;
+      this.#updatedPlayerScore = color;
+    } else {
       this.#players.RED.isCurrentPlayer = !this.#players.RED.isCurrentPlayer;
       this.#players.YELLOW.isCurrentPlayer = !this.#players.YELLOW.isCurrentPlayer;
     }
