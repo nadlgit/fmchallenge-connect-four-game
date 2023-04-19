@@ -19,7 +19,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "jest-extended"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
