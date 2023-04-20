@@ -4,7 +4,6 @@ describe('GameStateBuilder', () => {
   test('default', () => {
     const state = new GameStateBuilder().build();
     expect(state).toStrictEqual({
-      isRoundEnded: false,
       players: {
         RED: {
           name: 'red',
@@ -23,10 +22,6 @@ describe('GameStateBuilder', () => {
       },
       boardCounters: [],
     });
-  });
-  test('withRoundEnded', () => {
-    const state = new GameStateBuilder().withRoundEnded().build();
-    expect(state.isRoundEnded).toBe(true);
   });
   test('withRedPlayerName', () => {
     const state = new GameStateBuilder().withRedPlayerName('abc').build();
@@ -95,13 +90,5 @@ describe('GameStateBuilder', () => {
       { row: 1, column: 1, color: 'RED' },
       { row: 1, column: 2, color: 'YELLOW' },
     ]);
-  });
-  test('withDroppedCounter', () => {
-    const state = new GameStateBuilder().withDroppedCounter({ row: 1, column: 1 }).build();
-    expect(state.droppedCounter).toStrictEqual({ row: 1, column: 1 });
-  });
-  test('withUpdatedPlayerScore', () => {
-    const state = new GameStateBuilder().withUpdatedPlayerScore('RED').build();
-    expect(state.updatedPlayerScore).toBe('RED');
   });
 });

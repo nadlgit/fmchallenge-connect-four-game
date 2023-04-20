@@ -4,7 +4,6 @@ export const BOARD_COLUMNS = 7;
 export type PlayerColor = 'RED' | 'YELLOW';
 
 export type GameState = {
-  isRoundEnded: boolean;
   players: {
     [key in PlayerColor]: {
       name: string;
@@ -19,10 +18,6 @@ export type GameState = {
     column: number;
     color: PlayerColor;
     isWinPart?: boolean;
+    isDropped?: boolean;
   }[];
-  droppedCounter?: {
-    row: number;
-    column: number;
-  };
-  updatedPlayerScore?: PlayerColor;
 };

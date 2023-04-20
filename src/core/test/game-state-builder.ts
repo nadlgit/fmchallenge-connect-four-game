@@ -2,7 +2,6 @@ import { GameState } from '../game-state';
 
 export class GameStateBuilder {
   #gameState: GameState = {
-    isRoundEnded: false,
     players: {
       RED: {
         name: 'red',
@@ -24,11 +23,6 @@ export class GameStateBuilder {
 
   build() {
     return this.#gameState;
-  }
-
-  withRoundEnded() {
-    this.#gameState.isRoundEnded = true;
-    return this;
   }
 
   withRedPlayerName(value: string) {
@@ -76,16 +70,6 @@ export class GameStateBuilder {
 
   withBoardCounters(value: GameState['boardCounters']) {
     this.#gameState.boardCounters = value;
-    return this;
-  }
-
-  withDroppedCounter(value: GameState['droppedCounter']) {
-    this.#gameState.droppedCounter = value;
-    return this;
-  }
-
-  withUpdatedPlayerScore(value: GameState['updatedPlayerScore']) {
-    this.#gameState.updatedPlayerScore = value;
     return this;
   }
 }
