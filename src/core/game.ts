@@ -20,8 +20,10 @@ export class Game {
   };
   #board = new Board();
   #victoryCounters: { row: number; column: number }[] = [];
-  #droppedCounter: GameState['droppedCounter'];
-  #updatedPlayerScore: GameState['updatedPlayerScore'];
+  #droppedCounter?: {
+    row: number;
+    column: number;
+  };
 
   constructor(redPlayerName?: string, yellowPlayerName?: string, gameState?: GameState) {
     if (redPlayerName) {
@@ -36,8 +38,20 @@ export class Game {
         YELLOW: { ...gameState.players.YELLOW },
       };
       this.#board = new Board(gameState.boardCounters);
-      this.#droppedCounter = gameState.droppedCounter ? { ...gameState.droppedCounter } : undefined;
-      this.#updatedPlayerScore = gameState.updatedPlayerScore;
+      this.#victoryCounters = gameState.boardCounters
+        .filter(({ isWinPart }) => isWinPart)
+        .map(({ row, column }) => ({ row, column }));
+      this.#droppedCounter = gameState.boardCounters
+        .filter(({ isDropped }) => isDropped)
+        .reduce(
+          (acc, { row, column }) => ({ row, column }),
+          undefined as
+            | {
+                row: number;
+                column: number;
+              }
+            | undefined
+        );
     }
   }
 
@@ -51,13 +65,17 @@ export class Game {
       ) {
         counter.isWinPart = true;
       }
+      if (
+        this.#droppedCounter &&
+        this.#droppedCounter.row === counter.row &&
+        this.#droppedCounter.column === counter.column
+      ) {
+        counter.isDropped = true;
+      }
     });
     return {
-      isRoundEnded: !this.#players.RED.isCurrentPlayer && !this.#players.YELLOW.isCurrentPlayer,
       players: this.#players,
       boardCounters,
-      droppedCounter: this.#droppedCounter,
-      updatedPlayerScore: this.#updatedPlayerScore,
     };
   }
 
@@ -73,7 +91,6 @@ export class Game {
     this.#board = new Board();
     this.#victoryCounters = [];
     this.#droppedCounter = undefined;
-    this.#updatedPlayerScore = undefined;
   }
 
   startNewRound() {
@@ -86,7 +103,6 @@ export class Game {
     this.#board = new Board();
     this.#victoryCounters = [];
     this.#droppedCounter = undefined;
-    this.#updatedPlayerScore = undefined;
   }
 
   play(color: PlayerColor, column: number) {
@@ -105,7 +121,6 @@ export class Game {
       this.#players.YELLOW.isCurrentPlayer = false;
       this.#players[color].isWinner = true;
       this.#players[color].score += 1;
-      this.#updatedPlayerScore = color;
     } else {
       this.#players.RED.isCurrentPlayer = !this.#players.RED.isCurrentPlayer;
       this.#players.YELLOW.isCurrentPlayer = !this.#players.YELLOW.isCurrentPlayer;

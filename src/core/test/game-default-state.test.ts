@@ -1,10 +1,6 @@
 import { Game } from '../game';
 
 describe('Game default state', () => {
-  test('round is not ended', () => {
-    const gameState = new Game().getState();
-    expect(gameState.isRoundEnded).toBe(false);
-  });
   test('players names are set', () => {
     const gameState = new Game().getState();
     expect(gameState.players.RED.name).toBe('Player 1');
@@ -33,13 +29,5 @@ describe('Game default state', () => {
   test('board is empty', () => {
     const gameState = new Game().getState();
     expect(gameState.boardCounters).toStrictEqual([]);
-  });
-  test('there is no dropped counter', () => {
-    const gameState = new Game().getState();
-    expect(gameState.droppedCounter).toBeUndefined();
-  });
-  test('there is no updated player score', () => {
-    const gameState = new Game().getState();
-    expect(gameState.updatedPlayerScore).toBeUndefined();
   });
 });

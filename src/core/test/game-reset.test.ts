@@ -2,13 +2,6 @@ import { Game } from '../game';
 import { GameStateBuilder } from './game-state-builder';
 
 describe('resetGame() final game state', () => {
-  test('round is not ended', () => {
-    const initialState = new GameStateBuilder().withRoundEnded().build();
-    const game = new Game(undefined, undefined, initialState);
-    game.resetGame();
-    const gameState = game.getState();
-    expect(gameState.isRoundEnded).toBe(false);
-  });
   test('players names are kept', () => {
     const initialState = new GameStateBuilder()
       .withRedPlayerName('Red player')
@@ -66,19 +59,5 @@ describe('resetGame() final game state', () => {
     game.resetGame();
     const gameState = game.getState();
     expect(gameState.boardCounters).toStrictEqual([]);
-  });
-  test('there is no dropped counter', () => {
-    const initialState = new GameStateBuilder().withDroppedCounter({ row: 1, column: 1 }).build();
-    const game = new Game(undefined, undefined, initialState);
-    game.resetGame();
-    const gameState = game.getState();
-    expect(gameState.droppedCounter).toBeUndefined();
-  });
-  test('there is no updated player score', () => {
-    const initialState = new GameStateBuilder().withUpdatedPlayerScore('RED').build();
-    const game = new Game(undefined, undefined, initialState);
-    game.resetGame();
-    const gameState = game.getState();
-    expect(gameState.updatedPlayerScore).toBeUndefined();
   });
 });
