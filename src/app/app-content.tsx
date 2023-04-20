@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Home } from '@/components/home';
-import { Game } from '@/components/game';
-import { Rules } from '@/components/rules';
+import { Game, Home, Rules } from '@/components';
+import { GameProvider } from '@/store';
 
 export const AppContent = () => {
   type AppStage = 'rules' | 'vsPlayer' | 'vsCPU';
@@ -15,7 +14,11 @@ export const AppContent = () => {
     return <Rules goHome={goHome} />;
   }
   if (appStage === 'vsPlayer' || appStage === 'vsCPU') {
-    return <Game goHome={goHome} playMode={appStage} />;
+    return (
+      <GameProvider>
+        <Game goHome={goHome} playMode={appStage} />
+      </GameProvider>
+    );
   }
   return <Home showRules={showRules} playVsPlayer={playVsPlayer} playVsCPU={playVsCPU} />;
 };
