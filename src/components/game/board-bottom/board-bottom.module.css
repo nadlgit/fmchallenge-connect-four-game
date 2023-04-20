@@ -53,15 +53,15 @@
   align-items: center;
   background-size: cover;
 }
-.timer[data-color='R'] {
+.timer[data-color='RED'] {
   background-image: url('./turn-background-red.svg');
   color: var(--color-white);
 }
-.timer[data-color='Y'] {
+.timer[data-color='YELLOW'] {
   background-image: url('./turn-background-yellow.svg');
 }
 
-.label {
+.timerlabel {
   composes: heading-xs from global;
   display: inline-block;
   width: max-content;
@@ -70,7 +70,7 @@
   text-transform: uppercase;
 }
 
-.value {
+.timervalue {
   composes: heading-l from global;
 }
 
@@ -88,22 +88,22 @@
   background-color: var(--color-white);
   opacity: 0;
 }
-.winner.endgame {
-  animation: appear 0.1s 0.5s forwards;
+.winnervisible .winner {
+  opacity: 1;
 }
 
-.player {
+.winnerplayer {
   composes: heading-xs from global;
   text-transform: uppercase;
   line-height: 0.25rem;
 }
 
-.wins {
+.winnerresult {
   composes: heading-l from global;
   text-transform: uppercase;
 }
 
-.button {
+.winnerbutton {
   composes: heading-xs from global;
   display: inline-block;
   text-transform: uppercase;
@@ -113,7 +113,7 @@
   border: none;
   background-color: var(--color-dark-purple);
 }
-.button:hover {
+.winnerbutton:hover {
   background-color: var(--color-red);
 }
 
