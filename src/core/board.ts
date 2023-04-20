@@ -27,6 +27,10 @@ export class Board {
     );
   }
 
+  isFull() {
+    return this.#columns.reduce((acc, curr) => acc + curr.length, 0) >= BOARD_COLUMNS * BOARD_ROWS;
+  }
+
   addCounter(color: PlayerColor, column: number) {
     if (column < 1 || column > BOARD_COLUMNS || this.#columns[column - 1].length >= BOARD_ROWS) {
       return null;
