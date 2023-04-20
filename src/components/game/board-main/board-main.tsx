@@ -4,18 +4,24 @@ import styles from './board-main.module.css';
 const BOARD_COLUMNS = 7;
 const BOARD_ROWS = 6;
 
-type BoardMainProps = {
-  counters: {
-    column: number;
-    row: number;
-    color: 'R' | 'Y';
-    isDropped?: boolean;
-    isWinPart?: boolean;
-  }[];
-  onSelectColumn: (column: number) => void;
-};
+const counters: {
+  column: number;
+  row: number;
+  color: 'R' | 'Y';
+  isDropped?: boolean;
+  isWinPart?: boolean;
+}[] = [
+  { row: 1, column: 1, color: 'R', isWinPart: true },
+  { row: 1, column: 2, color: 'R', isWinPart: true },
+  { row: 1, column: 3, color: 'R', isWinPart: true },
+  { row: 1, column: 4, color: 'R', isDropped: true, isWinPart: true },
+  { row: 2, column: 1, color: 'Y' },
+  { row: 2, column: 2, color: 'Y' },
+  { row: 2, column: 3, color: 'Y' },
+];
+const onSelectColumn = (column: number) => console.log(`play on column ${column}`);
 
-export const BoardMain = ({ counters, onSelectColumn }: BoardMainProps) => {
+export const BoardMain = () => {
   const [grid, setGrid] = useState(
     new Array(BOARD_ROWS * BOARD_COLUMNS).fill(undefined) as (
       | { color: 'R' | 'Y'; dropOffset?: number; isWinPart?: boolean }
