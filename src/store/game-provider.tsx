@@ -1,10 +1,19 @@
 import { createContext, useCallback, useState, type PropsWithChildren } from 'react';
-import { GameService, type GameState, type PlayerColor, type PlayMode } from '@/core';
+import {
+  BOARD_COLUMNS,
+  BOARD_ROWS,
+  GameService,
+  type GameState,
+  type PlayerColor,
+  type PlayMode,
+} from '@/core';
 
 export const GameContext = createContext<
   | {
       playMode: PlayMode;
       playerScores: Record<PlayerColor, { value: number; name: string }>;
+      BOARD_COLUMNS: number;
+      BOARD_ROWS: number;
       boardCounters: GameState['boardCounters'];
       currentPlayer: { color: PlayerColor | null; name: string };
       winner: { color: PlayerColor | null; name: string };
@@ -75,6 +84,8 @@ export const GameProvider = ({ children }: PropsWithChildren) => {
       value={{
         playMode,
         playerScores,
+        BOARD_COLUMNS,
+        BOARD_ROWS,
         boardCounters,
         currentPlayer,
         winner,

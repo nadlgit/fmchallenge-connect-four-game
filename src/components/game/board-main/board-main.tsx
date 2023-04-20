@@ -1,27 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useGame } from '@/store';
 import styles from './board-main.module.css';
 
-const BOARD_COLUMNS = 7;
-const BOARD_ROWS = 6;
-
-const counters: {
-  column: number;
-  row: number;
-  color: 'R' | 'Y';
-  isDropped?: boolean;
-  isWinPart?: boolean;
-}[] = [
-  { row: 1, column: 1, color: 'R', isWinPart: true },
-  { row: 1, column: 2, color: 'R', isWinPart: true },
-  { row: 1, column: 3, color: 'R', isWinPart: true },
-  { row: 1, column: 4, color: 'R', isDropped: true, isWinPart: true },
-  { row: 2, column: 1, color: 'Y' },
-  { row: 2, column: 2, color: 'Y' },
-  { row: 2, column: 3, color: 'Y' },
-];
-const onSelectColumn = (column: number) => console.log(`play on column ${column}`);
-
 export const BoardMain = () => {
+  const { playMode, BOARD_COLUMNS, BOARD_ROWS, boardCounters, currentPlayer, play } = useGame();
+
+  const onSelectColumn = (column: number) => {
+    if (currentPlayer.color) {
+      play(currentPlayer.color, column);
+    }
+  };
+
   const [grid, setGrid] = useState(
     new Array(BOARD_ROWS * BOARD_COLUMNS).fill(undefined) as (
       | { color: 'R' | 'Y'; dropOffset?: number; isWinPart?: boolean }
@@ -31,6 +20,16 @@ export const BoardMain = () => {
   const [markerColumn, setMarkerColumn] = useState(6);
 
   useEffect(() => {
+    const counters: {
+      column: number;
+      row: number;
+      color: 'R' | 'Y';
+      isDropped?: boolean;
+      isWinPart?: boolean;
+    }[] = boardCounters.map((item) => ({
+      ...item,
+      color: item.color.substring(0, 1) as 'R' | 'Y',
+    }));
     const isSameCell = (column: number, row: number, gridIdx: number) =>
       column === (gridIdx % BOARD_COLUMNS) + 1 &&
       row === Math.ceil(BOARD_ROWS - gridIdx / BOARD_COLUMNS);
@@ -48,7 +47,7 @@ export const BoardMain = () => {
         return updatedCell;
       })
     );
-  }, [counters]);
+  }, [boardCounters]);
 
   const gridCells = grid.map((cell, idx) => {
     const cssClasses = [styles.cell];
@@ -91,7 +90,7 @@ export const BoardMain = () => {
   const gridMarker = (
     <div
       className={styles.marker}
-      data-color="Y"
+      data-color={(currentPlayer.color ?? '').substring(0, 1)}
       style={
         {
           '--marker-column': markerColumn,
