@@ -42,10 +42,10 @@
   justify-content: center;
   align-items: center;
 }
-.cell[data-content='R'] {
+.cell[data-content='RED'] {
   background-image: var(--counter-red-url);
 }
-.cell[data-content='Y'] {
+.cell[data-content='YELLOW'] {
   background-image: var(--counter-yellow-url);
 }
 
@@ -138,10 +138,10 @@
     width: var(--marker-width);
     height: var(--marker-height);
   }
-  .marker[data-color='R'] {
+  .marker[data-color='RED'] {
     background-image: url('./marker-red.svg');
   }
-  .marker[data-color='Y'] {
+  .marker[data-color='YELLOW'] {
     background-image: url('./marker-yellow.svg');
   }
 }
