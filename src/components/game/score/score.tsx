@@ -12,9 +12,9 @@ type ScoreProps = {
 };
 
 export const Score = ({ player }: ScoreProps) => {
-  const { playMode, playerNames, playerScores } = useGame();
-  const [score, setScore] = useState(playerScores[player]);
-  // const [prevScore, setPrevScore] = useState(playerScores[player]);
+  const { playMode, playerScores } = useGame();
+  const [score, setScore] = useState(playerScores[player].value);
+  // const [prevScore, setPrevScore] = useState(score);
   const position = player === 'RED' ? 'left' : player === 'YELLOW' ? 'right' : '';
   const icon = (() => {
     if (player === 'RED' && playMode === 'vsPlayer') return imgPlayer1;
@@ -26,13 +26,13 @@ export const Score = ({ player }: ScoreProps) => {
 
   useEffect(() => {
     // setPrevScore(score);
-    setScore(playerScores[player]);
-  }, [playerScores[player]]);
+    setScore(playerScores[player].value);
+  }, [playerScores[player].value]);
 
   return (
     <div className={styles.container} data-position={position}>
       <img src={icon} alt="" className={styles.icon} />
-      <span className={styles.label}>{playerNames[player]}</span>
+      <span className={styles.label}>{playerScores[player].name}</span>
       <span className={styles.score}>{score}</span>
     </div>
   );

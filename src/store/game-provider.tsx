@@ -4,11 +4,10 @@ import { GameService, type GameState, type PlayerColor, type PlayMode } from '@/
 export const GameContext = createContext<
   | {
       playMode: PlayMode;
-      playerNames: Record<PlayerColor, string>;
-      playerScores: Record<PlayerColor, number>;
+      playerScores: Record<PlayerColor, { value: number; name: string }>;
       boardCounters: GameState['boardCounters'];
-      currentPlayer: PlayerColor | null;
-      winner: PlayerColor | null;
+      currentPlayer: { color: PlayerColor | null; name: string };
+      winner: { color: PlayerColor | null; name: string };
       createGame: (playMode: PlayMode) => void;
       resetGame: () => void;
       startNewRound: () => void;
@@ -19,38 +18,39 @@ export const GameContext = createContext<
 
 export const GameProvider = ({ children }: PropsWithChildren) => {
   const [playMode, setPlayMode] = useState<PlayMode>('vsPlayer');
-  const [playerNames, setPlayerNames] = useState<Record<PlayerColor, string>>({
-    RED: '',
-    YELLOW: '',
-  });
-  const [playerScores, setPlayerScores] = useState<Record<PlayerColor, number>>({
-    RED: -1,
-    YELLOW: -1,
-  });
+  const [playerScores, setPlayerScores] = useState<
+    Record<PlayerColor, { value: number; name: string }>
+  >({ RED: { value: -1, name: '' }, YELLOW: { value: -1, name: '' } });
   const [boardCounters, setBoardCounters] = useState(
     () => GameService.getDefaultState().boardCounters
   );
-  const [currentPlayer, setCurrentPlayer] = useState<PlayerColor | null>(null);
-  const [winner, setWinner] = useState<PlayerColor | null>(null);
+  const [currentPlayer, setCurrentPlayer] = useState<{ name: string; color: PlayerColor | null }>({
+    color: null,
+    name: '',
+  });
+  const [winner, setWinner] = useState<{ name: string; color: PlayerColor | null }>({
+    color: null,
+    name: '',
+  });
   const updateGameState = useCallback((gameState: GameState) => {
-    setPlayerNames({
-      RED: gameState.players.RED.name,
-      YELLOW: gameState.players.YELLOW.name,
-    });
     setPlayerScores({
-      RED: gameState.players.RED.score,
-      YELLOW: gameState.players.YELLOW.score,
+      RED: { value: gameState.players.RED.score, name: gameState.players.RED.name },
+      YELLOW: { value: gameState.players.YELLOW.score, name: gameState.players.YELLOW.name },
     });
     setBoardCounters(gameState.boardCounters);
     setCurrentPlayer(
       gameState.players.RED.isCurrentPlayer
-        ? 'RED'
+        ? { color: 'RED', name: gameState.players.RED.name }
         : gameState.players.YELLOW.isCurrentPlayer
-        ? 'YELLOW'
-        : null
+        ? { color: 'YELLOW', name: gameState.players.YELLOW.name }
+        : { color: null, name: '' }
     );
     setWinner(
-      gameState.players.RED.isWinner ? 'RED' : gameState.players.YELLOW.isWinner ? 'YELLOW' : null
+      gameState.players.RED.isWinner
+        ? { color: 'RED', name: gameState.players.RED.name }
+        : gameState.players.YELLOW.isWinner
+        ? { color: 'YELLOW', name: gameState.players.RED.name }
+        : { color: null, name: '' }
     );
   }, []);
   const [gameService, setGameService] = useState(() => new GameService(playMode, updateGameState));
@@ -74,7 +74,6 @@ export const GameProvider = ({ children }: PropsWithChildren) => {
     <GameContext.Provider
       value={{
         playMode,
-        playerNames,
         playerScores,
         boardCounters,
         currentPlayer,
