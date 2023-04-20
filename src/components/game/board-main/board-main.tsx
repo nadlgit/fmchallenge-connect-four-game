@@ -17,9 +17,13 @@ export const BoardMain = () => {
       | undefined
     )[]
   );
-  const [markerColumn, setMarkerColumn] = useState(6);
+  const MARKER_INITIAL_POSITION = 6;
+  const [markerColumn, setMarkerColumn] = useState(MARKER_INITIAL_POSITION);
 
   useEffect(() => {
+    if (boardCounters.length === 0) {
+      setGrid((g) => new Array(BOARD_ROWS * BOARD_COLUMNS).fill(undefined));
+    }
     const counters: {
       column: number;
       row: number;
