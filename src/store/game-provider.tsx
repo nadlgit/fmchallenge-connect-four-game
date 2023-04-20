@@ -58,7 +58,7 @@ export const GameProvider = ({ children }: PropsWithChildren) => {
       gameState.players.RED.isWinner
         ? { color: 'RED', name: gameState.players.RED.name }
         : gameState.players.YELLOW.isWinner
-        ? { color: 'YELLOW', name: gameState.players.RED.name }
+        ? { color: 'YELLOW', name: gameState.players.YELLOW.name }
         : { color: null, name: '' }
     );
   }, []);
