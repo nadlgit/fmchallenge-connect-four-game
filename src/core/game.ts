@@ -117,10 +117,12 @@ export class Game {
     this.#droppedCounter = { row, column };
     this.#victoryCounters = this.#board.checkVictoryForPosition(row, column);
     if (this.#victoryCounters.length > 0) {
-      this.#players.RED.isCurrentPlayer = false;
-      this.#players.YELLOW.isCurrentPlayer = false;
       this.#players[color].isWinner = true;
       this.#players[color].score += 1;
+    }
+    if (this.#players.RED.isWinner || this.#players.YELLOW.isWinner || this.#board.isFull()) {
+      this.#players.RED.isCurrentPlayer = false;
+      this.#players.YELLOW.isCurrentPlayer = false;
     } else {
       this.#players.RED.isCurrentPlayer = !this.#players.RED.isCurrentPlayer;
       this.#players.YELLOW.isCurrentPlayer = !this.#players.YELLOW.isCurrentPlayer;
