@@ -23,6 +23,10 @@ export class GameService {
     this.#onStateUpdate(this.#game.getState());
   }
 
+  #playAsCPU() {
+    this.#game.play('YELLOW', 1);
+  }
+
   resetGame() {
     this.#game.resetGame();
     this.#notifyUpdate();
@@ -31,19 +35,20 @@ export class GameService {
   startNewRound() {
     this.#game.startNewRound();
     this.#notifyUpdate();
+    if (this.#playMode === 'vsCPU' && this.#game.getState().players.YELLOW.isFirstPlayer) {
+      this.#playAsCPU();
+      this.#notifyUpdate();
+    }
   }
 
   play(color: PlayerColor, column: number) {
-    if (this.#playMode === 'vsCPU') {
-      if (color === 'RED') {
-        this.#game.play('RED', column);
-        this.#notifyUpdate();
-        this.#game.play('YELLOW', 1);
-        this.#notifyUpdate();
-      }
-      return;
+    if (color === 'RED' || this.#playMode !== 'vsCPU') {
+      this.#game.play(color, column);
+      this.#notifyUpdate();
     }
-    this.#game.play(color, column);
-    this.#notifyUpdate();
+    if (this.#playMode === 'vsCPU') {
+      this.#playAsCPU();
+      this.#notifyUpdate();
+    }
   }
 }
