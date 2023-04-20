@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useGame } from '@/store';
 import { BoardBottom } from './board-bottom';
 import { BoardMain } from './board-main';
 import { Header } from './header';
@@ -12,8 +13,9 @@ type GameProps = {
 };
 
 export const Game = ({ goHome, playMode }: GameProps) => {
+  const { createGame, resetGame } = useGame();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const restartGame = () => console.log('restart');
   const openIngameMenu = () => setIsMenuOpen(true);
   const closeIngameMenu = (choice: 'continue' | 'restart' | 'quit') => {
     setIsMenuOpen(false);
@@ -21,36 +23,28 @@ export const Game = ({ goHome, playMode }: GameProps) => {
       goHome();
     }
     if (choice === 'restart') {
-      restartGame();
+      resetGame();
     }
   };
-  const playOnColumn = (column: number) => console.log(`play on column ${column}`);
+
+  useEffect(() => {
+    createGame(playMode);
+  }, [playMode]);
 
   return (
     <div className={styles.layout}>
       <div className={styles.header}>
-        <Header showMenu={openIngameMenu} restart={restartGame} />
+        <Header showMenu={openIngameMenu} restart={resetGame} />
         {isMenuOpen && <IngameMenu onClose={closeIngameMenu} />}
       </div>
       <div className={styles.scoreleft}>
-        <Score color="R" value={12} />
+        <Score player="RED" />
       </div>
       <div className={styles.scoreright}>
-        <Score color="Y" value={23} />
+        <Score player="YELLOW" />
       </div>
       <div className={styles.boardmain}>
-        <BoardMain
-          counters={[
-            { row: 1, column: 1, color: 'R', isWinPart: true },
-            { row: 1, column: 2, color: 'R', isWinPart: true },
-            { row: 1, column: 3, color: 'R', isWinPart: true },
-            { row: 1, column: 4, color: 'R', isDropped: true, isWinPart: true },
-            { row: 2, column: 1, color: 'Y' },
-            { row: 2, column: 2, color: 'Y' },
-            { row: 2, column: 3, color: 'Y' },
-          ]}
-          onSelectColumn={playOnColumn}
-        />
+        <BoardMain />
       </div>
       <div className={styles.boardbottom}>
         <BoardBottom />
