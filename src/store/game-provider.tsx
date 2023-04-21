@@ -21,6 +21,7 @@ export const GameContext = createContext<
       resetGame: () => void;
       startNewRound: () => void;
       play: (color: PlayerColor, column: number) => void;
+      handlePlayerTimeOut: (color: PlayerColor) => void;
     }
   | undefined
 >(undefined);
@@ -79,6 +80,12 @@ export const GameProvider = ({ children }: PropsWithChildren) => {
     },
     [gameService]
   );
+  const handlePlayerTimeOut = useCallback(
+    (color: PlayerColor) => {
+      gameService.handlePlayerTimeOut(color);
+    },
+    [gameService]
+  );
   return (
     <GameContext.Provider
       value={{
@@ -93,6 +100,7 @@ export const GameProvider = ({ children }: PropsWithChildren) => {
         resetGame,
         startNewRound,
         play,
+        handlePlayerTimeOut,
       }}
     >
       {children}

@@ -1,15 +1,14 @@
 import { useGame } from '@/store';
 import styles from './board-bottom.module.css';
 
-export const BoardBottom = () => {
+type BoardBottomProps = { timerValue: number };
+
+export const BoardBottom = ({ timerValue }: BoardBottomProps) => {
   const { currentPlayer, winner, startNewRound } = useGame();
 
-  const timerLabel = `${currentPlayer.name}'s turn`;
-  const timerValue = 30;
-  const winnerResult = winner.color
-    ? `win${winner.name.toLowerCase() === 'you' ? '' : 's'}`
-    : 'tie';
-
+  const timerLabel = `${
+    currentPlayer.name.toLowerCase() === 'you' ? 'Your' : currentPlayer.name + "'s"
+  } turn`;
   const timerElement = (
     <div className={styles.timer} data-color={currentPlayer.color}>
       <span className={styles.timerlabel}>{timerLabel}</span>
@@ -17,6 +16,9 @@ export const BoardBottom = () => {
     </div>
   );
 
+  const winnerResult = winner.color
+    ? 'win' + (winner.name.toLowerCase() === 'you' ? '' : 's')
+    : 'tie';
   const winnerElement = (
     <div className={styles.winner}>
       <span className={styles.winnerplayer}>{winner.name}</span>

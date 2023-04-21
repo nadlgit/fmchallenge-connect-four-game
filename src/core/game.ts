@@ -128,4 +128,11 @@ export class Game {
       this.#players.YELLOW.isCurrentPlayer = !this.#players.YELLOW.isCurrentPlayer;
     }
   }
+
+  forceVictory(color: PlayerColor) {
+    this.#players[color].isWinner = true;
+    this.#players[color].score += 1;
+    this.#players.RED.isCurrentPlayer = false;
+    this.#players.YELLOW.isCurrentPlayer = false;
+  }
 }

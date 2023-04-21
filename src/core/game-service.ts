@@ -24,7 +24,10 @@ export class GameService {
   }
 
   #playAsCPU() {
-    this.#game.play('YELLOW', 1);
+    setTimeout(() => {
+      this.#game.play('YELLOW', 1);
+      this.#notifyUpdate();
+    }, 1000);
   }
 
   resetGame() {
@@ -37,7 +40,6 @@ export class GameService {
     this.#notifyUpdate();
     if (this.#playMode === 'vsCPU' && this.#game.getState().players.YELLOW.isFirstPlayer) {
       this.#playAsCPU();
-      this.#notifyUpdate();
     }
   }
 
@@ -48,7 +50,12 @@ export class GameService {
     }
     if (this.#playMode === 'vsCPU') {
       this.#playAsCPU();
-      this.#notifyUpdate();
     }
+  }
+
+  handlePlayerTimeOut(color: PlayerColor) {
+    const winner = color === 'RED' ? 'YELLOW' : 'RED';
+    this.#game.forceVictory(winner);
+    this.#notifyUpdate();
   }
 }

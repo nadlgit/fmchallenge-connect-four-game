@@ -13,7 +13,18 @@ type GameProps = {
 };
 
 export const Game = ({ goHome, playMode }: GameProps) => {
-  const { createGame, resetGame } = useGame();
+  const { currentPlayer, createGame, resetGame, handlePlayerTimeOut } = useGame();
+  useEffect(() => {
+    createGame(playMode);
+  }, [playMode]);
+
+  const TIMER_START_VALUE = 30;
+  const [timerValue, setTimerValue] = useState(TIMER_START_VALUE);
+
+  const restart = () => {
+    resetGame();
+    setTimerValue(TIMER_START_VALUE);
+  };
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const openIngameMenu = () => setIsMenuOpen(true);
@@ -23,18 +34,31 @@ export const Game = ({ goHome, playMode }: GameProps) => {
       goHome();
     }
     if (choice === 'restart') {
-      resetGame();
+      restart();
     }
   };
 
   useEffect(() => {
-    createGame(playMode);
-  }, [playMode]);
+    if (!isMenuOpen) {
+      const intervalId = setInterval(() => {
+        setTimerValue((v) => (v > 0 ? v - 1 : 0));
+      }, 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [isMenuOpen]);
+  useEffect(() => {
+    setTimerValue(TIMER_START_VALUE);
+  }, [currentPlayer.color]);
+  useEffect(() => {
+    if (timerValue === 0 && currentPlayer.color) {
+      handlePlayerTimeOut(currentPlayer.color);
+    }
+  }, [timerValue]);
 
   return (
     <div className={styles.layout}>
       <div className={styles.header}>
-        <Header showMenu={openIngameMenu} restart={resetGame} />
+        <Header showMenu={openIngameMenu} restart={restart} />
         {isMenuOpen && <IngameMenu onClose={closeIngameMenu} />}
       </div>
       <div className={styles.scoreleft}>
@@ -47,7 +71,7 @@ export const Game = ({ goHome, playMode }: GameProps) => {
         <BoardMain />
       </div>
       <div className={styles.boardbottom}>
-        <BoardBottom />
+        <BoardBottom timerValue={timerValue} />
       </div>
     </div>
   );
