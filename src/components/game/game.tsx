@@ -14,10 +14,7 @@ type GameProps = {
 
 export const Game = ({ goHome, playMode }: GameProps) => {
   const { currentPlayer, createGame, resetGame, handlePlayerTimeOut } = useGame();
-  useEffect(() => {
-    createGame(playMode);
-  }, [playMode]);
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const TIMER_START_VALUE = 30;
   const [timerValue, setTimerValue] = useState(TIMER_START_VALUE);
 
@@ -25,8 +22,6 @@ export const Game = ({ goHome, playMode }: GameProps) => {
     resetGame();
     setTimerValue(TIMER_START_VALUE);
   };
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const openIngameMenu = () => setIsMenuOpen(true);
   const closeIngameMenu = (choice: 'continue' | 'restart' | 'quit') => {
     setIsMenuOpen(false);
@@ -37,6 +32,10 @@ export const Game = ({ goHome, playMode }: GameProps) => {
       restart();
     }
   };
+
+  useEffect(() => {
+    createGame(playMode);
+  }, [playMode]);
 
   useEffect(() => {
     if (!isMenuOpen) {
