@@ -28,7 +28,7 @@ export const Score = ({ player }: ScoreProps) => {
   useEffect(() => {
     setPrevScore(score);
     setScore(playerScores[player].value);
-    setScoreTransition(true);
+    setScoreTransition(!!playerScores[player].value);
     setTimeout(() => {
       setScoreTransition(false);
     }, 400);
