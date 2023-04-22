@@ -120,7 +120,11 @@ export class Game {
       this.#players[color].isWinner = true;
       this.#players[color].score += 1;
     }
-    if (this.#players.RED.isWinner || this.#players.YELLOW.isWinner || this.#board.isFull()) {
+    if (
+      this.#players.RED.isWinner ||
+      this.#players.YELLOW.isWinner ||
+      !this.#board.getValidMoves().length
+    ) {
       this.#players.RED.isCurrentPlayer = false;
       this.#players.YELLOW.isCurrentPlayer = false;
     } else {
@@ -134,5 +138,9 @@ export class Game {
     this.#players[color].score += 1;
     this.#players.RED.isCurrentPlayer = false;
     this.#players.YELLOW.isCurrentPlayer = false;
+  }
+
+  getValidMoves() {
+    return this.#board.getValidMoves();
   }
 }

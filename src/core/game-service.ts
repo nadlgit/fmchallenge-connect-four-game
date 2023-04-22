@@ -25,8 +25,12 @@ export class GameService {
 
   #playAsCPU() {
     setTimeout(() => {
-      this.#game.play('YELLOW', 1);
-      this.#notifyUpdate();
+      const moves = this.#game.getValidMoves();
+      if (moves.length > 0) {
+        const column = moves[Math.floor(Math.random() * moves.length)];
+        this.#game.play('YELLOW', column);
+        this.#notifyUpdate();
+      }
     }, 1000);
   }
 

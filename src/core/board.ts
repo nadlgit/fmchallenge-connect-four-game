@@ -27,8 +27,11 @@ export class Board {
     );
   }
 
-  isFull() {
-    return this.#columns.reduce((acc, curr) => acc + curr.length, 0) >= BOARD_COLUMNS * BOARD_ROWS;
+  getValidMoves() {
+    return this.#columns.reduce(
+      (acc, curr, idx) => (curr.length < BOARD_ROWS ? [...acc, idx + 1] : acc),
+      [] as number[]
+    );
   }
 
   addCounter(color: PlayerColor, column: number) {
