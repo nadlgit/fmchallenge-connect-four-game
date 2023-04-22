@@ -86,10 +86,10 @@
   border: 0.1875rem solid var(--color-black);
   box-shadow: 0 var(--box-shadow-offset-y) 0 var(--color-black);
   background-color: var(--color-white);
-  opacity: 0;
 }
-.winnervisible .winner {
-  opacity: 1;
+.winner > * {
+  opacity: 0;
+  animation: appear 0.3s 0.4s forwards;
 }
 
 .winnerplayer {

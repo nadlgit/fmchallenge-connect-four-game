@@ -37,10 +37,9 @@ export const BoardBottom = ({ timerValue }: BoardBottomProps) => {
           : winner.color === 'YELLOW'
           ? styles.bottomyellow
           : ''
-      } ${winner.color || !currentPlayer.color ? styles.winnervisible : ''}`}
+      }`}
     >
-      {timerElement}
-      {winnerElement}
+      {!winner.color && currentPlayer.color ? timerElement : winnerElement}
     </div>
   );
 };
